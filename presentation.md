@@ -906,6 +906,221 @@ mrWhite.canCook // true
 
 ---
 
+## Decorators
+
+```javascript
+class MyClass {
+
+    @memorizeFor(1000)
+    fetchFromServer(delta) {
+        ...
+    }
+
+    @trace()
+    complexFunction() {
+        ...
+    }
+
+}
+```
+
+---
+
+^ Gulp, grunt, systemJS
+
+---
+
+## Typescript
+
+^ Alla vettiga språka har några olika datatyper. Eller hur?
+I javascript har vi 7 olika typer:
+
+---
+
+## Typescript
+
+- Boolean
+- Null
+- Undefined
+- Number
+- String
+- Symbol
+- Object
+
+---
+
+## Typescript
+
+- typeof null === 'object' // bug
+- typeof Array() === 'object'
+- typeof ( new Map() ) === 'object'
+
+^ Man kan tycka vad man vill om typning men eftersom vi uppenbarlige har olika datatyper så är det ide att annotera metoder.
+
+---
+
+## Typescript
+
+```javascript
+const obj = {
+    firstNumber: 1,
+    secondNumber: 2,
+    threadNumber: 3
+};
+
+function add(a, b, c) {
+    return a + b + c;
+}
+
+const result = add(obj.firstNumber, obj.secondNumber, obj.threadNunber);
+console.log(result);
+```
+
+---
+
+## Typescript
+
+```javascript
+const obj = {
+    firstNumber: 1,
+    secondNumber: 2,
+    threadNumber: 3
+};
+
+function add(a, b, c) {
+    return a + b + c;
+}
+
+const result = add(obj.firstNumber, obj.secondNumber, obj.threadNunber);
+console.log(result); // NaN
+```
+
+---
+
+## Typescript
+
+```javascript
+function area(r) {
+    return Math.PI * r * r;
+}
+
+const result = area('1O');
+```
+
+---
+
+## Typescript
+
+```javascript
+function area(r: number): number {
+    return Math.PI * r * r;
+}
+```
+
+^ Okej, så vad inebär detta?
+Jo, Vi har en funktion som tar emot ett argument och det argumentet måste vara ett number och sedan returnerar funktionen ett number.
+Typescript hjälper till med detta. Dock kan det också sätta keppar i hjulet.
+
+---
+
+## Typescript
+
+```javascript
+const obj = {};
+obj.name = 'Mr. White'; // Property 'name' does not exist on type {}.
+```
+
+^ Vilket är förvisso sant MEN det hindrar mig från att programera javascript. Om ni börjar använda typescript så kommer ni springa på minor. Alla gör det och typescript är inte felfritt
+- Jag tror att jag har rapporterart ett tiotal buggar.
+Vissa är inte återgärdade.
+
+---
+
+## Typescript
+
+```javascript
+// a.js
+let a = 1;
+
+if (true) {
+    a = 2;
+}
+
+export {a};
+
+// index.js
+import {a} from './a.js';
+console.log(a); // 1
+```
+
+---
+
+## Typescript
+
+```javascript
+// a.js
+let a = 1;
+export {a};
+
+if (true) {
+    a = 2;
+}
+
+// index.js
+import {a} from './a.js';
+console.log(a); // 1
+```
+
+---
+
+## Typescript
+
+```javascript
+const obj = {};
+obj.name = 'Mr. White';
+// Property 'name' does not exist on type {}.
+```
+
+^ Så det finns problem men det finns också stora fördelar, så pass stroa fördelar som har gjort vänt mig från att vara emot typescript till att använda det i nästa alla mina projekt (både frontend och backend).
+Typescript ska vara ett hjälpmedel. Om det är ivägen. Använd `any` type.
+
+---
+
+## Typescript
+
+```javascript
+const obj: any = {};
+obj.name = 'Mr. White';
+```
+
+^ Syntaxen kan vara lite förvirrande i vissa sammanhang men man kommer över det efter ett tag.
+
+---
+
+## Typescript
+
+```javascript
+interface tvShow {
+    title: string;
+    runtime: number;
+    airDate: Date;
+    genre: string[];
+    episode: episode[];
+}
+
+function fetchTvShowsFromServer(): tvShow {
+    return http.get('breaking-bad');
+}
+
+const show = fetchTvShowsFromServer();
+show.title // OK
+show.name  // Property 'name' does not exist on type 'tvShow'.
+```
+
+---
+
+## Andra ES7 features
+
 - System global: https://github.com/tc39/proposal-global
 - Call constructor: https://github.com/tc39/ecma262/blob/master/workingdocs/callconstructor.md
 - observable: https://github.com/zenparsing/es-observable
@@ -915,3 +1130,74 @@ mrWhite.canCook // true
 - This binding: https://github.com/zenparsing/es-function-bind
 
 ---
+
+# [fit] Angular 2
+
+---
+
+```javascript
+// app.component.ts
+import {Component} from 'angular2/core';
+
+@Component({
+    selector: 'my-app',
+    template: `<h1>I'm the one who knocks</h1>`
+})
+class AppComponent { }
+
+export {AppComponent};
+```
+
+---
+
+```javascript
+import {bootstrap}    from 'angular2/platform/browser';
+import {AppComponent} from './app.component';
+
+bootstrap(AppComponent);
+```
+
+---
+
+```html
+<body>
+    <my-app>Loading...</my-app>
+</body>
+```
+
+---
+
+```javascript
+import {Component} from 'angular2/core';
+
+@Component({
+    selector: 'my-app',
+    template: `
+        <h1>{{title}}</h1>
+        <h2>{{quote}}</h2>
+    `
+})
+export class AppComponent {
+  title = 'Breaking Bad';
+  quote = `I'm not in the meth business. I'm in the empire business.`;
+}
+```
+
+---
+
+```javascript
+import {Component} from 'angular2/core';
+
+@Component({
+    selector: 'my-app',
+    template: `
+        <h1>{{title}}</h1>
+        <h2>{{quote}}</h2>
+    `
+})
+export class AppComponent {
+  title = 'Breaking Bad';
+  quote = `I'm not in the meth business. I'm in the empire business.`;
+}
+```
+
