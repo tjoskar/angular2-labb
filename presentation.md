@@ -1,0 +1,917 @@
+build-lists: true
+autoscale: true
+
+![](bg.png)
+
+---
+
+# [fit] UPPESITTARKVÄLL MED ANGULAR 2
+
+^ Som ni redan vet så kommer huvud fokus av denna presentation och kväll vara tillängnad åt Angular 2 men för att vi alla ska vara på någolunda samma sida så tänkte jag gå igenom lite förkunskaper först.
+^ Detta får mig att hoppa direkt på ES6
+
+---
+
+# [fit] ES6
+
+^ Eller Harmony som det kanske kallas
+
+---
+
+# [fit] Harmony
+
+^ Eller ECMAScript version 6 om man vill vara tydlig
+
+---
+
+# [fit] ECMAScript version 6
+
+^ Eller ES2015 som det nu officielt heter
+
+---
+
+# [fit] ES2015
+
+^ Kärt barn har många namn. Utan att gå in på några ditaljer vad ecmascript är för något så kan vi säga att det är specifikationen av javascript, typ (egentligen är javascript bara en dialekt av ecmascript).
+^ Och ES6 är en big deal för javascrip världen.
+^ Varför? Låt oss bara lite snabbt kolla på tids axlen:
+
+---
+
+## History of ECMAScript
+
+- 1997: ES1
+- 1998: ES2
+- 1999: ES3
+- 2007: ES4
+- 2009: ES5
+
+^ ES2: inga nyheter
+ES3: Man ska komma ihåg att internet var inte så stort 1999, PC hade precis börjat letat sig in i vart och varanat hem
+ES4: Åtta år senare kommer en stort genombrott, vi skulle få classer, ett modul system, statisk typning, iteratorer. Detta skulle bli stort.
+ES5: Vi fick strict mode. Som vi hade väntat!
+
+---
+
+## History of ECMAScript
+
+- 2015: ES6
+- 2016: ES7
+
+^ Okej, så låt oss böja med några nyhter i ES6,
+Jag kommer inte hinna ta upp alla. Utan detta kommer bara bli ett utplock för att ni enklare ska kunna sätta in er i Angular.
+
+---
+
+## var, let and const
+
+```javascript
+if (true) {
+    var a = 1;
+}
+console.log(a); // 1
+```
+
+---
+
+## var, let and const
+
+```javascript
+if (true) {
+    let a = 1;
+}
+console.log(a); // ReferenceError: x is not defined
+```
+
+var => Function scope
+let => Block scope
+
+---
+
+## var, let and const
+
+Function scope:
+
+```javascript
+(function () {
+    var a = 1;
+}());
+console.log(a); // ReferenceError
+```
+
+---
+
+## var, let and const
+
+Block scope
+
+```javascript
+{
+    let a = 1;
+}
+console.log(a); // ReferenceError
+```
+
+var => Function scope
+let => Block scope
+
+---
+
+## var, let and const
+
+```javascript
+const a = 1;
+a = 2; // TypeError: Assignment to constant variable
+```
+
+```javascript
+const arr = [1, 2];
+arr.push(3);
+arr.someRandomProp = 'Jepp Jepp';
+```
+
+---
+
+# CLASS
+
+---
+
+## Class
+
+```javascript
+class Person {
+
+    constructor(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    fulName() {
+        return this.firstName + ' ' + this.lastName;
+    }
+
+}
+
+const heisenberg = new Person('Walter', 'White');
+heisenberg.fulName();
+```
+
+^ Det är inga konstigheter är.
+Det finns inga privata medlemmar. Ungefär som i python.
+Det finns dock förslag på privata medlemmar till es7.
+
+---
+
+## Arrow functions
+
+```javascript
+function add(a, b) { return a + b; }
+```
+
+^ Detta är en av funktionerna som javascript saknade mest.
+javascript är i regel enekl trådat, vilket gör att allt sker asyncront.
+Vilket gör att vi måste ha callbacks
+enkel tråd => async => classback => lamda functioner
+
+---
+
+## Arrow functions
+
+```javascript
+function add(a, b) { return a + b; }
+```
+
+(i grova drag) samma sak som (ej hosted):
+
+```javascript
+var add = function(a, b) { return a + b; };
+```
+
+---
+
+## Arrow functions
+
+```javascript
+function add(a, b) { return a + b; }
+```
+
+(i grova drag) samma sak som (ej hosted):
+
+```javascript
+var add = function(a, b) { return a + b; };
+```
+
+Vilket är samma sak som:
+
+```javascript
+var add = (a, b) => a + b;
+```
+
+---
+
+## Arrow functions
+
+```javascript
+class Person {
+
+    numbers = [1, 2, 3, 4, 5];
+
+    constructor() {
+        numbers.filter(i => this.odd(i));
+
+        // same as:
+        var that = this;
+        numbers.filter(function(i) {
+            return that.odd(i);
+        });
+
+        // same as:
+        numbers.filter((function(i) {
+            return that.odd(i);
+        }).bind(this));
+    }
+
+    odd(i) {
+        return i % 2 != 0;
+    }
+
+}
+```
+
+---
+
+## Arrow functions
+
+```javascript
+const a = () => {}
+a.prototype // undefined
+// a.bind, a.call, a.apply is defined
+// 'arguments' is not defined
+new a(); // TypeError: () => {} is not a constructor
+```
+
+---
+
+## Arrow function
+
+```javascript
+const fun = () => 1; // returns 1
+```
+
+---
+
+## Arrow function
+
+```javascript
+const fun = () => 1; // returns 1
+```
+
+```javascript
+const fun = () => {a: 1}; // returns undefined
+```
+
+---
+
+## Arrow function
+
+```javascript
+const fun = () => {a: 1}; // returns undefined
+```
+
+Faktum är att det är samma sak som:
+
+```javascript
+const fun = () => {
+    (a: 1)
+};
+```
+
+Vilket beter sig på samma sätt som:
+
+```javascript
+const fun = function() {
+    a: 1
+};
+```
+
+---
+
+## Arrow function
+
+```javascript
+const fun = () => ({a: 1});
+```
+<br>
+
+```javascript
+const fun = () => {
+    return {a: 1};
+}
+```
+
+---
+
+## Template strings
+
+```javascript
+var name = 'Heisenberg';
+var s = [
+    'Walter White: Now... Say my name.'
+    'Declan: You\'re ' + name,
+    'Walter White: You\'re goddamn right!'
+].join('\n');
+```
+
+---
+
+## Template strings
+
+```javascript
+var name = 'Heisenberg';
+var s = [
+    'Walter White: Now... Say my name.'
+    'Declan: You\'re ' + name,
+    'Walter White: You\'re goddamn right!'
+].join('\n');
+```
+
+<br>
+
+```javascript
+const name = 'Heisenberg';
+const s = `
+    Walter White: Now... Say my name.
+    Declan: You're ${name}
+    Walter White: You're goddamn right!
+`;
+```
+
+^ I javascript kan ' användas på samma sätt som " dock har vi saknat något sätt att deklarera multilines men nu har vi `
+
+---
+
+## Destructuring, Default and the Rest
+
+^ Detta används och om ni inte har använt det för ut i javascript så kan det ta ett tag för att bli van vid syntaxen
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+const numbers = [1, 2, 3];
+const [one, two] = numbers; // one = 1, two = 2
+const [one, ...rest] = numbers; // one = 1, rest = [2, 3]
+```
+
+^ Okej, låt oss krångla till det med objekt:
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+const num = {x: 1, y: 2};
+const {x, y} = num; // x = 1, y = 2
+```
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+const num = {x: 1, y: 2};
+const {x: a, y: b} = num; // a = 1, b = 2
+```
+
+^ Vi döpa om parametrar
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+const num = {x: 1};
+const {x: a = 0, y: b = 1} = num; // a = 1, b = 1
+```
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+const num = { x: [{ foo: 1, bar: 2 }, {}], y: 2 };
+const { x: [{foo: a}] = 2 } = num; // a = 1
+```
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+const fs = require('fs');
+const {rename} = fs;
+
+rename('walter.txt', 'heisenberg.txt');
+```
+
+^ Okej, några verkliga exempel:
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+const {element, index} = findElement(1, [1, 2]);
+const {element} = findElement(1, [1, 2]);
+const {index} = findElement(1, [1, 2]);
+```
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+httpClient.get(url, ({body}) => {
+   console.log(body);
+});
+```
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+function fun({a, b}) {
+    return a + b;
+}
+fun({b: 2, a: 1});
+```
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+function fun(a, b, ...args) {} // a = 1, b = 2, args = [3, 4]
+f(1, 2, 3, 4);
+```
+
+---
+
+## Destructuring, Default and the Rest
+
+```javascript
+Math.min(...[-1, 5, 11, 3]) // -1
+Math.min.apply(Math, [-1, 5, 11, 3]) // -1
+Math.min(-1, 5, 11, 3) // -1
+```
+<br>
+
+```javascript
+let [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2016-02-12');
+```
+
+---
+
+## Iterators and Generators
+
+```javascript
+function* binary() {
+    yield 0;
+    yield 1;
+    return;
+}
+
+for (let b of binary()) {
+    console.log(b);
+}
+```
+
+---
+
+## Iterators and Generators
+
+```javascript
+function* test() {
+    const n = yield 0;
+    yield n + 1;
+    return;
+}
+
+const gen = test();
+
+console.log(gen.next().value); // 0
+console.log(gen.next(2).value); // 3
+```
+
+^ Det som kan skilja sig från andra språk är att man kan trycka tillbaka värden. Man brukar prata om push och pull.
+
+---
+
+## for of
+
+```javascript
+const arr = [3, 5, 7];
+a.note = 'LA FAMILIA ES TODO';
+
+for (let key in arr) {
+   console.log(key); // logs: 0, 1, 2, note
+}
+
+for (let value of arr) {
+   console.log(value); // logs 3, 5, 7
+}
+
+arr.forEach(v => console.log(v)); // logs 3, 5, 7
+```
+
+---
+
+## for of
+
+```javascript
+const arr = undefined;
+
+for (let key in arr) { // OK
+   console.log(key);
+}
+
+for (let value of arr) { // Cannot read property 'Symbol(Symbol.iterator)' of undefined
+   console.log(value);
+}
+
+arr.forEach(v => console.log(v)); // Cannot read property 'forEach' of undefined
+```
+
+---
+
+## Modules
+
+### CommonJS
+
+```javascript
+// circle.js
+exports.area = r => {
+    return 3.14 * r * r;
+};
+```
+
+```javascript
+// index.js
+const circle = require('./circle.js');
+circle.area(2)
+```
+
+---
+
+## Modules
+
+### AMD
+
+```javascript
+// circle.js
+define(['circle'], () => {
+
+    return {
+        area(r) {
+          return 3.14 * r * r;
+        }
+    };
+
+});
+```
+
+```javascript
+// index.js
+require(['circle'], circle => {
+    circle.area(2);
+});
+```
+
+---
+
+## Modules
+
+### SystemJS
+
+```javascript
+// circle.js
+define(function() {
+  return {
+      area(r) {
+        return 3.14 * r * r;
+      }
+  };
+});
+```
+
+```javascript
+// index.js
+const circle = require('./circle.js');
+circle.area(2);
+```
+
+---
+
+## Modules
+
+### ES6
+
+```javascript
+// circle.js
+const area = r => {
+    return 3.14 * r * r;
+};
+
+export {area};
+```
+
+```javascript
+// index.js
+import {area} from './circle.js';
+area(2)
+```
+
+---
+
+## Modules
+
+### ES6
+
+```javascript
+const area = r => Math.PI * r * r;
+const perimeter = r => Math.PI * 2 * r;
+
+export {area, perimeter};
+export {area as calculateArea};
+export default area;
+
+export default {area, perimeter};
+// same as:
+export default {area: area, perimeter: perimeter};
+// same as:
+const modulesToExport = {area: area, perimeter: perimeter};
+export default modulesToExport;
+```
+
+---
+
+## Modules
+
+### ES6
+
+```javascript
+export {area, perimeter};
+import {area, perimeter} from './circle.js';
+
+export {area, perimeter};
+import * as circle from './circle.js';
+circle.area(2);
+
+export {area as calculateArea};
+import {calculateArea} from './circle.js';
+calculateArea(2);
+
+export default area;
+import area from './circle.js';
+area(2);
+
+export default {area, perimeter};
+import circle from './circle.js';
+circle.area(2);
+```
+
+---
+
+## Promises
+
+---
+
+## Tail Calls
+^ Wii, detta kommer ni kanske inte ikontakt med idag men det gör att man kan skriva funktionel programering i javascript på allval
+
+---
+
+## ES7
+
+---
+
+## Decorators
+
+```javascript
+class Heisenberg {
+
+    constructor() {
+        ...
+    }
+
+}
+```
+^ Vad är decorators? Om ni har arbetat med pythons decorators så kommer ni känna er hemma annars så kommer här en snabb genomgång
+Låt oss säga att vi har en enkel klass:
+Låt oss nu säga att vi vill lägga på meta data
+
+---
+
+## Decorators
+
+```javascript
+function canCook(target) {
+    target.canCook = true;
+}
+
+@canCook
+class Heisenberg {
+
+    constructor() {
+        ...
+    }
+
+}
+
+const heisenberg = new Heisenberg();
+heisenberg.canCook // true
+```
+
+^ Och vad är det som är fantastiskt med detta?
+Detta möjliggör att vi kan lägga på egensaker som kan senare användas. Ex:
+
+---
+
+## Decorators
+
+```javascript
+@template(`
+    <button>Click me</button>
+`)
+class ButtonController {
+
+}
+```
+
+---
+
+## Decorators
+
+```javascript
+import {autoInject, dependencyInjection} from 'autoinject';
+
+class Db {
+
+    connectionString: 'user:pass@local';
+
+}
+
+@autoInject
+class MyClass {
+
+    db: Db;
+
+    constructor(db: Db) {
+        this.db = db;
+    }
+}
+
+const myClass = dependencyInjection(MyClass);
+myClass.db.connectionString // 'user:pass@local'
+```
+
+^Och det stannar så klart inte här utan man kan göra ganska mycket med decorators. I sommras skrev jag en dependncy injector med hjälp av decorators (och typescript):
+
+---
+
+## Decorators
+
+```javascript
+class MrWhite {
+
+    name = 'Heisenberg';
+
+    knocking() {
+        return 'I am the one who knocks.';
+    }
+
+}
+```
+
+---
+
+## Decorators
+
+```javascript
+class MrWhite {
+
+    get name() {
+        return 'Heisenberg';
+    }
+
+    set name() {}
+
+    knocking() {
+        return 'I am the one who knocks.';
+    }
+
+}
+```
+
+---
+
+## Decorators
+
+```javascript
+class MrWhite {
+
+    knocking() {
+        return 'I am the one who knocks.';
+    }
+
+}
+Object.defineProperty(MrWhite.prototype, 'name', {
+    value: 'Heisenberg',
+    writable: false
+});
+```
+
+---
+
+## Decorators
+
+```javascript
+class MrWhite {
+
+    @readOnly name = 'Heisenberg';
+
+    knocking() {
+        return 'I am the one who knocks.';
+    }
+
+}
+
+function readOnly(target, name, descriptor) {
+    descriptor.writable = false;
+}
+```
+
+---
+
+## Decorators
+
+```javascript
+class MrWhite {
+
+    @readOnly(true)
+    name = 'Heisenberg';
+
+    knocking() {
+        return 'I am the one who knocks.';
+    }
+
+}
+
+function readOnly(isReadOnly) {
+    return (target, name, descriptor) => {
+        descriptor.writable = !isReadOnly;
+    }
+}
+```
+
+---
+
+## Decorators
+
+```javascript
+function canCook(canHeCook) {
+    return function(target) {
+        target.canCook = canHeCook;
+    };
+}
+
+@canCook(true)
+class MrWhite {}
+
+// Same as:
+
+var MrWhite = (function () {
+  class MrWhite {
+  }
+
+  MrWhite = canCook(true)(MrWhite) || MrWhite;
+  return MrWhite;
+})();
+
+const mrWhite = new MrWhite();
+mrWhite.canCook // true
+```
+
+---
+
+- System global: https://github.com/tc39/proposal-global
+- Call constructor: https://github.com/tc39/ecma262/blob/master/workingdocs/callconstructor.md
+- observable: https://github.com/zenparsing/es-observable
+- decorators: https://github.com/wycats/javascript-decorators/blob/master/README.md
+- async/await https://github.com/tc39/ecmascript-asyncawait
+- SIMD: http://tc39.github.io/ecmascript_simd/
+- This binding: https://github.com/zenparsing/es-function-bind
+
+---
