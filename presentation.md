@@ -1166,6 +1166,7 @@ bootstrap(AppComponent);
 ```
 
 ---
+#### Data binding
 
 ```javascript
 import {Component} from 'angular2/core';
@@ -1184,6 +1185,7 @@ export class AppComponent {
 ```
 
 ---
+#### Iterator
 
 ```javascript
 import {Component} from 'angular2/core';
@@ -1192,12 +1194,69 @@ import {Component} from 'angular2/core';
     selector: 'my-app',
     template: `
         <h1>{{title}}</h1>
-        <h2>{{quote}}</h2>
+        <ul>
+            <li *ngFor="#episodeName of episodes">
+                {{ episodeName }}
+            </li>
+        </ul>
     `
 })
 export class AppComponent {
   title = 'Breaking Bad';
-  quote = `I'm not in the meth business. I'm in the empire business.`;
+  episodes = [
+    'Live Free or Die',
+    'Madrigal',
+    'Hazard Pay'
+  ];
 }
 ```
 
+---
+#### Local DOM variable
+
+```javascript
+import {Component} from 'angular2/core';
+
+@Component({
+    selector: 'search',
+    template: `
+        <input #searchInput (keyup)="undefined">
+        <p>Value: {{searchInput.value}}</p>
+    `
+})
+export class SearchComponent {}
+
+```
+<sub>http://plnkr.co/edit/7s5RJAKXdvFXPD31TdK8?p=preview</sub>
+
+---
+
+#### Local DOM variable
+
+```javascript
+import {Component} from 'angular2/core';
+
+@Component({
+    selector: 'search',
+    template: `
+        <input (keyup)="onKeyUp($event)">
+        <p>Value: {{value}}</p>
+    `
+})
+export class SearchComponent {
+    value;
+
+    onKeyUp($event) {
+        console.log($event);
+    }
+}
+
+```
+<sub>http://plnkr.co/edit/7s5RJAKXdvFXPD31TdK8?p=preview</sub>
+
+---
+
+
+- Zone
+- Template: http://victorsavkin.com/post/119943127151/angular-2-template-syntax
+#![](doll.gif)
