@@ -1231,7 +1231,7 @@ export class SearchComponent {}
 
 ---
 
-#### Local DOM variable
+#### Events
 
 ```javascript
 import {Component} from 'angular2/core';
@@ -1246,8 +1246,8 @@ import {Component} from 'angular2/core';
 export class SearchComponent {
     value;
 
-    onKeyUp($event) {
-        console.log($event);
+    onKeyUp(event) {
+        this.value = event.target.value;
     }
 }
 
