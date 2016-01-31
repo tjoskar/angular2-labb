@@ -1256,7 +1256,376 @@ export class SearchComponent {
 
 ---
 
+#### Property bindings
 
-- Zone
-- Template: http://victorsavkin.com/post/119943127151/angular-2-template-syntax
-#![](doll.gif)
+```javascript
+import {Component} from 'angular2/core';
+
+@Component({
+    selector: 'login',
+    template: `
+        <input [value]="username">
+    `
+})
+export class LoginComponent {
+    username = 'Jesse';
+}
+
+```
+<sub>http://plnkr.co/edit/O0Y7uBnSFUNEaJSKGf61?p=preview</sub>
+
+---
+
+#### Property binding
+```html
+<input [value]="username">
+```
+
+#### Event binding
+```html
+<input (keyup)="onKeyUp($event)">
+```
+
+---
+
+# 2-WAY binding?
+
+---
+
+#### 2-WAY binding
+
+```html
+<input [value]="username" (input)="username=$event.target.value" >
+```
+
+---
+
+#### 2-WAY binding - Angular way
+
+```html
+<input [ngModel]="username" (ngModelChange)="username=$event" >
+```
+
+---
+
+#### 2-WAY binding - Angular way
+
+```html
+<input [(ngModel)]="username">
+```
+
+---
+
+#### 2-WAY binding - Implementation
+
+```javascript
+@Directive({
+  selector: '[ngModel]',
+  host: {
+    '[value]': 'ngModel',
+    '(input)': 'ngModelChange.next($event.target.value)'
+  }
+})
+class NgModel {
+  @Input() ngModel;
+  @Output() ngModelChange = new EventEmitter();
+}
+```
+
+---
+
+### Component in component
+
+![](doll.gif)
+
+---
+
+```javascript
+import {Component, Input, Output, EventEmitter, Directive} from 'angular2/core';
+
+@Component({
+    selector: 'quote-generator',
+    template: `<button (click)="onClick()">{{buttonText}}</button>`
+})
+class QuoteGeneratorComponent {
+    @Input() buttonText = '';
+    @Output() buttonClick = new EventEmitter();
+    quotes = ['Say my name', 'I am the one who knocks', 'Science bitch', 'Stay out of my territory'];
+
+    onClick() {
+      const random = Math.floor((Math.random() * this.quotes.length));
+      this.buttonClick.next(this.quotes[random]);
+    }
+}
+
+@Component({
+    selector: 'quote',
+    template: `
+        <quote-generator [buttonText]="buttonText" (buttonClick)="updateQuote($event)"></quote-generator>
+        {{quoteText}}
+    `,
+    directives: [QuoteGeneratorComponent]
+})
+export class SearchComponent {
+    buttonText = 'Click me';
+    quoteText = '';
+
+    updateQuote(event) {
+      this.quoteText = event;
+    }
+}
+```
+
+<sub>http://plnkr.co/edit/8PDsCRsZa1dCLovTaUWY?p=preview</sub>
+
+---
+
+## dependency injection
+
+---
+
+```javascript
+import {Component} from 'angular2/core';
+
+class QuoteService {
+  quote = 'Test data';
+}
+
+@Component({
+    selector: 'quote',
+    template: `{{quoteText}}`
+})
+export class QuoteComponent {
+  quoteText = '';
+  constructor(service: QuoteService) {
+    this.quoteText = service.test;
+  }
+}
+```
+
+---
+
+DI Exception
+No provider for QuoteService! (QuoteComponent -> QuoteService)
+
+---
+
+### 1. bootstrap
+
+---
+
+```javascript
+import {bootstrap} from 'angular2/platform/browser';
+import {QuoteComponent} from './quote.component';
+
+bootstrap(QuoteComponent);
+```
+
+---
+
+```javascript
+import {bootstrap} from 'angular2/platform/browser';
+import {QuoteComponent} from './quote.component';
+import {QuoteService} from './quote.service';
+
+bootstrap(QuoteComponent, [
+    QuoteService
+]);
+```
+
+---
+
+```javascript
+import {bootstrap} from 'angular2/platform/browser';
+import {QuoteComponent} from './quote.component';
+import {QuoteService} from './quote.service';
+
+bootstrap(QuoteComponent, [
+    provide(QuoteService, {useClass: QuoteService})
+]);
+```
+
+---
+
+### 2. component providers
+
+---
+
+```javascript
+import {Component} from 'angular2/core';
+
+class QuoteService {
+  quote = 'Test data';
+}
+
+@Component({
+    selector: 'quote',
+    template: `{{quoteText}}`,
+    providers: [Service]
+})
+export class QuoteComponent {
+  quoteText = '';
+  constructor(service: Service) {
+    this.quoteText = service.test;
+  }
+}
+```
+
+---
+
+## ROUTER
+
+---
+
+```javascript
+@Component({
+    template: `<router-outlet></router-outlet>`
+})
+@RouteConfig([
+  {path:'/search', name: 'Search', component: SearchComponent},
+  {path:'/shows', name: 'Shows', component: ShowsComponent},
+  {path:'/show/:id', name: 'Show', component: ShowComponent}
+])
+class AppComponent { }
+```
+
+---
+
+```javascript
+@Component(...)
+@RouteConfig([
+  ...
+  {path:'/show/:id', name: 'Show', component: ShowComponent}
+])
+class AppComponent { }
+
+@Component(...)
+class ShowComponent {
+  constructor(params: RouteParms) {
+    this.showId = params.get('id');
+  }
+}
+```
+
+---
+
+```html
+<h1>Amazing app</h1>
+<nav>
+    <a [routerLink]="['Shows']">Shows</a>
+    <a [routerLink]="['Show', {id: '5'}]">Heroes</a>
+</nav>
+<router-outlet></router-outlet>
+```
+
+---
+
+## Zone.js
+
+---
+
+## `$scope.$apply()`
+
+---
+
+### Zone.js
+<br>
+### The Good, The Bad and The Ugly
+
+---
+
+#### The Good
+
+```javascript
+setTimeout(() => {
+    // This will trigger a DOM update
+    this.viewData = 'New view data';
+}, 100);
+```
+
+---
+
+#### The Bad
+
+```javascript
+setInterval(() => {
+   // Paint the Sunset with me
+   window.requestAnimationFrame(sunset);
+}, 10);
+```
+
+---
+
+## The Ugly
+
+---
+
+![inline](monkey-patch.jpg)
+
+---
+
+#### The Ugly
+
+```javascript
+const orgSetInterval = window.setInterval;
+window.setInterval = function(...args) {
+    return zone.run(orgSetInterval, args);
+}
+```
+
+---
+
+## Other features
+
+- Change detection
+- Testing
+- Pipes
+- Lifetime hooks
+- Directives
+
+http://victorsavkin.com/post/110170125256/change-detection-in-angular-2
+
+---
+
+## Beyond Angular
+
+---
+
+```javascript
+const angular = 1 * '🍎';
+const react = 1 * '🍐';
+
+angular > react   // false
+angular < react   // false
+angular === react // false
+```
+
+---
+
+## 6<sup>5th</sup> constraints for performance
+
+---
+
+#### 6<sup>5th</sup> constraints for performance
+
+- Under 60 kB css
+- Under 60 kB html
+- Under 60 kB javascript
+- 60 fps
+- .6 sec avg latency
+
+<sub>https://developers.google.com/web/showcase/case-study/googleplus</sub>
+
+---
+
+- Size doesn't matter with service worker
+- Use web workers
+- Cache everything on local device
+
+---
+
+![inline](server-render.png)
+
+https://jakearchibald.com/2016/streams-ftw/
+
+---
