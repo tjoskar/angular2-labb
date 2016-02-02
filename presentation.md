@@ -8,7 +8,7 @@ autoscale: true
 # [fit] UPPESITTARKVÄLL MED ANGULAR 2
 
 ^ Som ni redan vet så kommer huvud fokus av denna presentation och kväll vara tillängnad åt Angular 2 men för att vi alla ska vara på någolunda samma sida så tänkte jag gå igenom lite förkunskaper först.
-^ Detta får mig att hoppa direkt på ES6
+Detta får mig att hoppa direkt på ES6
 
 ---
 
@@ -45,20 +45,15 @@ autoscale: true
 - 1999: ES3
 - 2007: ES4
 - 2009: ES5
-
-^ ES2: inga nyheter
-ES3: Man ska komma ihåg att internet var inte så stort 1999, PC hade precis börjat letat sig in i vart och varanat hem
-ES4: Åtta år senare kommer en stort genombrott, vi skulle få classer, ett modul system, statisk typning, iteratorer. Detta skulle bli stort.
-ES5: Vi fick strict mode. Som vi hade väntat!
-
----
-
-## History of ECMAScript
-
 - 2015: ES6
 - 2016: ES7
+- 2017: ES8
 
-^ Okej, så låt oss böja med några nyhter i ES6,
+^ ES2: inga nyheter
+ES3: Regular expressions och try/catch. Man ska komma ihåg att internet var inte så stort 1999, PC hade precis börjat letat sig in i vart och varanat hem
+ES4: Åtta år senare kommer en stort genombrott, vi skulle få classer, ett modul system, statisk typning, iteratorer. Detta skulle bli stort.
+ES5: Vi fick strict mode. Som vi hade väntat!
+Okej, så låt oss böja med några nyhter i ES6,
 Jag kommer inte hinna ta upp alla. Utan detta kommer bara bli ett utplock för att ni enklare ska kunna sätta in er i Angular.
 
 ---
@@ -83,33 +78,15 @@ if (true) {
 console.log(a); // ReferenceError: x is not defined
 ```
 
-var => Function scope
-let => Block scope
-
 ---
 
 ## var, let and const
 
-Function scope:
-
 ```javascript
-(function () {
-    var a = 1;
-}());
-console.log(a); // ReferenceError
-```
-
----
-
-## var, let and const
-
-Block scope
-
-```javascript
-{
+if (true) {
     let a = 1;
 }
-console.log(a); // ReferenceError
+console.log(a); // ReferenceError: x is not defined
 ```
 
 var => Function scope
@@ -158,14 +135,14 @@ heisenberg.fulName();
 
 ^ Det är inga konstigheter är.
 Det finns inga privata medlemmar. Ungefär som i python.
-Det finns dock förslag på privata medlemmar till es7.
+Det finns dock förslag på privata medlemmar till es8.
 
 ---
 
 ## Arrow functions
 
 ```javascript
-function add(a, b) { return a + b; }
+const add = function(a, b) { return a + b; }
 ```
 
 ^ Detta är en av funktionerna som javascript saknade mest.
@@ -178,13 +155,7 @@ enkel tråd => async => classback => lamda functioner
 ## Arrow functions
 
 ```javascript
-function add(a, b) { return a + b; }
-```
-
-(i grova drag) samma sak som (ej hosted):
-
-```javascript
-var add = function(a, b) { return a + b; };
+const add = (a, b) => { return a + b; }
 ```
 
 ---
@@ -192,24 +163,12 @@ var add = function(a, b) { return a + b; };
 ## Arrow functions
 
 ```javascript
-function add(a, b) { return a + b; }
-```
-
-(i grova drag) samma sak som (ej hosted):
-
-```javascript
-var add = function(a, b) { return a + b; };
-```
-
-Vilket är samma sak som:
-
-```javascript
-var add = (a, b) => a + b;
+const add = (a, b) => a + b;
 ```
 
 ---
 
-## Arrow functions
+## Arrow functions - Lexical scope
 
 ```javascript
 class Person {
@@ -217,18 +176,9 @@ class Person {
     numbers = [1, 2, 3, 4, 5];
 
     constructor() {
-        numbers.filter(i => this.odd(i));
-
-        // same as:
-        var that = this;
-        numbers.filter(function(i) {
-            return that.odd(i);
-        });
-
-        // same as:
-        numbers.filter((function(i) {
-            return that.odd(i);
-        }).bind(this));
+        this.numbers.filter(i => this.odd(i)); // OK
+        this.numbers.filter(function(u) { return this.odd(t)}); // TypeError
+        // TypeError: Cannot read property 'odd' of undefined
     }
 
     odd(i) {
@@ -243,11 +193,11 @@ class Person {
 ## Arrow functions
 
 ```javascript
-const a = () => {}
-a.prototype // undefined
-// a.bind, a.call, a.apply is defined
-// 'arguments' is not defined
-new a(); // TypeError: () => {} is not a constructor
+const A = () => {};
+A.prototype // undefined
+// A.bind, A.call and A.apply are defined but can not change function scope
+// Lexical scope: 'arguments' and 'this' are defined by host
+new A(); // TypeError: () => {} is not A constructor
 ```
 
 ---
@@ -325,17 +275,6 @@ var s = [
 ---
 
 ## Template strings
-
-```javascript
-var name = 'Heisenberg';
-var s = [
-    'Walter White: Now... Say my name.'
-    'Declan: You\'re ' + name,
-    'Walter White: You\'re goddamn right!'
-].join('\n');
-```
-
-<br>
 
 ```javascript
 const name = 'Heisenberg';
@@ -685,6 +624,147 @@ circle.area(2);
 ---
 
 ## Promises
+^ Min favorit! Har funits länge nu men är entligen med i specifikationen
+
+---
+
+```javascript
+function findShowById(show, cb) {
+    repo.getShowById(show.ids.id, function(error, _show) {
+        if (error) {
+            cb(error);
+        } else if (_show) {
+            cb(undefined, _show);
+        } else {
+            repo.getShowByTheTvDbId(show.ids.theTvDb, function(error, _show) {
+                if (error) {
+                    cb(error);
+                } else if (_show) {
+                    cb(undefined, _show);
+                } else {
+                    repo.getShowByImdbId(show.ids.imdb, function(error, _show) {
+                        if (error) {
+                            cb(error);
+                        } else if (_show) {
+                            cb(undefined, _show);
+                        } else {
+                            cb(new MissingShowError('Can not find show:' + error));
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+```
+
+---
+
+```javascript
+function findShowById(show) {
+    return repo.getShowById(show.ids.id)
+        .catch(() => repo.getShowByTheTvDbId(show.ids.theTvDb))
+        .catch(() => repo.getShowByImdbId(show.ids.imdb))
+        .catch(() => {
+            throw new MissingShowError('Can not find show:' + error);
+        });
+}
+```
+
+^ Promises kanske inte uppförsig som man alltid vill och de kan vara svårare att debugga.
+
+---
+
+## Promises - The bad part
+
+- No lazy execution
+- No abort
+- No retry
+- Single value
+
+^ Ibland kan man vilja skicka runt ett promises object men inte exikvera det förs man vet att det behövs
+Det går inte att avbryta ett promises. XMLHttpRequest
+
+---
+
+## Reactive Programming (rxjs)
+
+^ Jag kommer inte hinna gå igenom detta i ditalj men Angular 2 har en tät kopling till just Reactive Programming så jag kommer gå igenom det övergripande
+
+---
+
+### Use case - Autocomplete search
+
+---
+
+### Autocomplete search - Problems
+
+- Debounce
+- Min search string length
+- HTTP response order
+
+---
+
+```javascript
+const source = Rx.Observable.fromEvent($input, 'keyup');
+```
+
+---
+
+```javascript
+const source = Rx.Observable.fromEvent($input, 'keyup')
+    .map(event => event.target.value); // Input text
+```
+
+---
+
+```javascript
+const source = Rx.Observable.fromEvent($input, 'keyup')
+    .map(event => event.target.value) // Input text
+    .filter(text => text.length > 3); // Only if the text is longer than 3 characters
+```
+
+---
+
+```javascript
+const source = Rx.Observable.fromEvent($input, 'keyup')
+    .map(event => event.target.value) // Input text
+    .filter(text => text.length > 3)  // Only if the text is longer than 3 characters
+    .debounce(400);                   // Pause for 400ms
+```
+
+---
+
+```javascript
+const source = Rx.Observable.fromEvent($input, 'keyup')
+    .map(event => event.target.value) // Input text
+    .filter(text => text.length > 3)  // Only if the text is longer than 3 characters
+    .debounce(400)                    // Pause for 400ms
+    .flatMapLatest(text => {
+        return this.http(`${url}?q=${text}`); // Only care about the latest search string
+    });
+```
+
+---
+
+```javascript
+const source = Rx.Observable.fromEvent($input, 'keyup')
+    .map(event => event.target.value) // Input text
+    .filter(text => text.length > 3)  // Only if the text is longer than 3 characters
+    .debounce(400)                    // Pause for 400ms
+    .flatMapLatest(text => {
+        return this.http(`${url}?q=${text}`); // Only care about the latest search string
+    });
+
+source.subscribe(
+          next => updateView(next),
+          error => console.error('Oh my god!!' + error),
+          () => console.log('We are done here'));
+```
+
+---
+
+
 
 ---
 
@@ -693,7 +773,7 @@ circle.area(2);
 
 ---
 
-## ES7
+## ES.Next
 
 ---
 
