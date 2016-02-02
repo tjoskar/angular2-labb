@@ -3,7 +3,18 @@ const webpack = require('webpack');
 
 module.exports = {
     devtool: 'source-map',
-    entry: './src/boot.ts',
+
+    entry: {
+        app: './src/boot.ts',
+        vendors: [
+            'es6-shim',
+            'reflect-metadata',
+            'rxjs',
+            'zone.js/dist/zone-microtask',
+            'zone.js/dist/long-stack-trace-zone',
+            'angular2/platform/browser'
+        ]
+    },
     output: {
         path: './src/',
         filename: 'one-file-to-rule-them-all.js'
@@ -25,6 +36,7 @@ module.exports = {
         contentBase: 'src'
     },
     plugins: [
+        new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.DedupePlugin()
     ]
