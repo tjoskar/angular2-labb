@@ -194,11 +194,12 @@ class Person {
 
 ```javascript
 const A = () => {};
-A.prototype // undefined
-// A.bind, A.call and A.apply are defined but can not change function scope
-// Lexical scope: 'arguments' and 'this' are defined by host
-new A(); // TypeError: () => {} is not A constructor
 ```
+
+- `A.prototype === undefined`
+- `A.bind`, `A.call` and `A.apply` are defined but can not change function scope
+- Lexical scope: `arguments` and `this` are defined by host
+- `new A(); // TypeError: () => {} is not A constructor`
 
 ---
 
@@ -665,7 +666,7 @@ function findShowById(show) {
     return repo.getShowById(show.ids.id)
         .catch(() => repo.getShowByTheTvDbId(show.ids.theTvDb))
         .catch(() => repo.getShowByImdbId(show.ids.imdb))
-        .catch(() => {
+        .catch(error => {
             throw new MissingShowError('Can not find show:' + error);
         });
 }
