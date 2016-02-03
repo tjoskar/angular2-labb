@@ -3,12 +3,7 @@ autoscale: true
 
 ![](bg.png)
 
----
-
-# [fit] UPPESITTARKVÄLL MED ANGULAR 2
-
-^ Som ni redan vet så kommer huvud fokus av denna presentation och kväll vara tillängnad åt Angular 2 men för att vi alla ska vara på någolunda samma sida så tänkte jag gå igenom lite förkunskaper först.
-Detta får mig att hoppa direkt på ES6
+^ Som ni redan vet så kommer huvud fokus av denna presentation och kväll vara tillängnad åt Angular 2 men låt oss först prata lite snabbt om ES6
 
 ---
 
@@ -32,9 +27,9 @@ Detta får mig att hoppa direkt på ES6
 
 # [fit] ES2015
 
-^ Kärt barn har många namn. Utan att gå in på några ditaljer vad ecmascript är för något så kan vi säga att det är specifikationen av javascript, typ (egentligen är javascript bara en dialekt av ecmascript).
-^ Och ES6 är en big deal för javascrip världen.
-^ Varför? Låt oss bara lite snabbt kolla på tids axlen:
+^ Kärt barn har många namn.
+Internet har fullständigt kokat av upphätsning över ES6 och ES6 är en big deal för javascrip världen.
+Varför? Låt oss bara lite snabbt kolla på tids axlen:
 
 ---
 
@@ -53,8 +48,7 @@ Detta får mig att hoppa direkt på ES6
 ES3: Regular expressions och try/catch. Man ska komma ihåg att internet var inte så stort 1999, PC hade precis börjat letat sig in i vart och varanat hem
 ES4: Åtta år senare kommer en stort genombrott, vi skulle få classer, ett modul system, statisk typning, iteratorer. Detta skulle bli stort.
 ES5: Vi fick strict mode. Som vi hade väntat!
-Okej, så låt oss böja med några nyhter i ES6,
-Jag kommer inte hinna ta upp alla. Utan detta kommer bara bli ett utplock för att ni enklare ska kunna sätta in er i Angular.
+Okej, låt oss böja med några få nyhter i ES6. När jag började skriva denna presentation så försökte jag
 
 ---
 
@@ -109,36 +103,6 @@ arr.someRandomProp = 'Jepp Jepp';
 
 ---
 
-# CLASS
-
----
-
-## Class
-
-```javascript
-class Person {
-
-    constructor(firstName, lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    fulName() {
-        return this.firstName + ' ' + this.lastName;
-    }
-
-}
-
-const heisenberg = new Person('Walter', 'White');
-heisenberg.fulName();
-```
-
-^ Det är inga konstigheter är.
-Det finns inga privata medlemmar. Ungefär som i python.
-Det finns dock förslag på privata medlemmar till es8.
-
----
-
 ## Arrow functions
 
 ```javascript
@@ -155,37 +119,7 @@ enkel tråd => async => classback => lamda functioner
 ## Arrow functions
 
 ```javascript
-const add = (a, b) => { return a + b; }
-```
-
----
-
-## Arrow functions
-
-```javascript
 const add = (a, b) => a + b;
-```
-
----
-
-## Arrow functions - Lexical scope
-
-```javascript
-class Person {
-
-    numbers = [1, 2, 3, 4, 5];
-
-    constructor() {
-        this.numbers.filter(i => this.odd(i)); // OK
-        this.numbers.filter(function(u) { return this.odd(t)}); // TypeError
-        // TypeError: Cannot read property 'odd' of undefined
-    }
-
-    odd(i) {
-        return i % 2 != 0;
-    }
-
-}
 ```
 
 ---
@@ -203,252 +137,6 @@ const A = () => {};
 
 ---
 
-## Arrow function
-
-```javascript
-const fun = () => 1; // returns 1
-```
-
----
-
-## Arrow function
-
-```javascript
-const fun = () => 1; // returns 1
-```
-
-```javascript
-const fun = () => {a: 1}; // returns undefined
-```
-
----
-
-## Arrow function
-
-```javascript
-const fun = () => {a: 1}; // returns undefined
-```
-
-Faktum är att det är samma sak som:
-
-```javascript
-const fun = () => {
-    (a: 1)
-};
-```
-
-Vilket beter sig på samma sätt som:
-
-```javascript
-const fun = function() {
-    a: 1
-};
-```
-
----
-
-## Arrow function
-
-```javascript
-const fun = () => ({a: 1});
-```
-<br>
-
-```javascript
-const fun = () => {
-    return {a: 1};
-}
-```
-
----
-
-## Template strings
-
-```javascript
-var name = 'Heisenberg';
-var s = [
-    'Walter White: Now... Say my name.'
-    'Declan: You\'re ' + name,
-    'Walter White: You\'re goddamn right!'
-].join('\n');
-```
-
----
-
-## Template strings
-
-```javascript
-const name = 'Heisenberg';
-const s = `
-    Walter White: Now... Say my name.
-    Declan: You're ${name}
-    Walter White: You're goddamn right!
-`;
-```
-
-^ I javascript kan ' användas på samma sätt som " dock har vi saknat något sätt att deklarera multilines men nu har vi `
-
----
-
-## Destructuring, Default and the Rest
-
-^ Detta används och om ni inte har använt det för ut i javascript så kan det ta ett tag för att bli van vid syntaxen
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-const numbers = [1, 2, 3];
-const [one, two] = numbers; // one = 1, two = 2
-const [one, ...rest] = numbers; // one = 1, rest = [2, 3]
-```
-
-^ Okej, låt oss krångla till det med objekt:
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-const num = {x: 1, y: 2};
-const {x, y} = num; // x = 1, y = 2
-```
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-const num = {x: 1, y: 2};
-const {x: a, y: b} = num; // a = 1, b = 2
-```
-
-^ Vi döpa om parametrar
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-const num = {x: 1};
-const {x: a = 0, y: b = 1} = num; // a = 1, b = 1
-```
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-const num = { x: [{ foo: 1, bar: 2 }, {}], y: 2 };
-const { x: [{foo: a}] = 2 } = num; // a = 1
-```
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-const fs = require('fs');
-const {rename} = fs;
-
-rename('walter.txt', 'heisenberg.txt');
-```
-
-^ Okej, några verkliga exempel:
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-const {element, index} = findElement(1, [1, 2]);
-const {element} = findElement(1, [1, 2]);
-const {index} = findElement(1, [1, 2]);
-```
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-httpClient.get(url, ({body}) => {
-   console.log(body);
-});
-```
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-function fun({a, b}) {
-    return a + b;
-}
-fun({b: 2, a: 1});
-```
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-function fun(a, b, ...args) {} // a = 1, b = 2, args = [3, 4]
-f(1, 2, 3, 4);
-```
-
----
-
-## Destructuring, Default and the Rest
-
-```javascript
-Math.min(...[-1, 5, 11, 3]) // -1
-Math.min.apply(Math, [-1, 5, 11, 3]) // -1
-Math.min(-1, 5, 11, 3) // -1
-```
-<br>
-
-```javascript
-let [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2016-02-12');
-```
-
----
-
-## Iterators and Generators
-
-```javascript
-function* binary() {
-    yield 0;
-    yield 1;
-    return;
-}
-
-for (let b of binary()) {
-    console.log(b);
-}
-```
-
----
-
-## Iterators and Generators
-
-```javascript
-function* test() {
-    const n = yield 0;
-    yield n + 1;
-    return;
-}
-
-const gen = test();
-
-console.log(gen.next().value); // 0
-console.log(gen.next(2).value); // 3
-```
-
-^ Det som kan skilja sig från andra språk är att man kan trycka tillbaka värden. Man brukar prata om push och pull.
-
----
-
 ## for of
 
 ```javascript
@@ -456,14 +144,14 @@ const arr = [3, 5, 7];
 a.note = 'LA FAMILIA ES TODO';
 
 for (let key in arr) {
-   console.log(key); // logs: 0, 1, 2, note
+   console.log(key); // 0, 1, 2, note
 }
 
 for (let value of arr) {
-   console.log(value); // logs 3, 5, 7
+   console.log(value); // 3, 5, 7
 }
 
-arr.forEach(v => console.log(v)); // logs 3, 5, 7
+arr.forEach(v => console.log(v)); // 3, 5, 7
 ```
 
 ---
@@ -758,14 +446,11 @@ const source = Rx.Observable.fromEvent($input, 'keyup')
     });
 
 source.subscribe(
-          next => updateView(next),
-          error => console.error('Oh my god!!' + error),
-          () => console.log('We are done here'));
+          result => updateView(result),
+          error => console.error('Oh my god!!' + error));
 ```
 
 ---
-
-
 
 ---
 
@@ -1007,7 +692,15 @@ class MyClass {
 
 ---
 
-^ Gulp, grunt, systemJS
+## Other ES.Next features
+
+- System global: https://github.com/tc39/proposal-global
+- Call constructor: https://github.com/tc39/ecma262/blob/master/workingdocs/callconstructor.md
+- observable: https://github.com/zenparsing/es-observable
+- decorators: https://github.com/wycats/javascript-decorators/blob/master/README.md
+- async/await https://github.com/tc39/ecmascript-asyncawait
+- SIMD: http://tc39.github.io/ecmascript_simd/
+- This binding: https://github.com/zenparsing/es-function-bind
 
 ---
 
@@ -1032,11 +725,36 @@ I javascript har vi 7 olika typer:
 
 ## Typescript
 
-- typeof null === 'object' // bug
 - typeof Array() === 'object'
 - typeof ( new Map() ) === 'object'
+- typeof NaN === 'number'
+- typeof null === 'object'
 
 ^ Man kan tycka vad man vill om typning men eftersom vi uppenbarlige har olika datatyper så är det ide att annotera metoder.
+
+---
+
+## Typescript
+
+```javascript
+function area(r) {
+    return Math.PI * r * r;
+}
+```
+
+---
+
+## Typescript
+
+```javascript
+function area(r: number): number {
+    return Math.PI * r * r;
+}
+```
+
+---
+
+![](dont-like-it.gif)
 
 ---
 
@@ -1088,19 +806,7 @@ function area(r) {
 const result = area('1O');
 ```
 
----
-
-## Typescript
-
-```javascript
-function area(r: number): number {
-    return Math.PI * r * r;
-}
-```
-
-^ Okej, så vad inebär detta?
-Jo, Vi har en funktion som tar emot ett argument och det argumentet måste vara ett number och sedan returnerar funktionen ett number.
-Typescript hjälper till med detta. Dock kan det också sätta keppar i hjulet.
+^ Typescript hjälper till med detta. Dock kan det också sätta keppar i hjulet.
 
 ---
 
@@ -1117,40 +823,7 @@ Vissa är inte återgärdade.
 
 ---
 
-## Typescript
-
-```javascript
-// a.js
-let a = 1;
-
-if (true) {
-    a = 2;
-}
-
-export {a};
-
-// index.js
-import {a} from './a.js';
-console.log(a); // 1
-```
-
----
-
-## Typescript
-
-```javascript
-// a.js
-let a = 1;
-export {a};
-
-if (true) {
-    a = 2;
-}
-
-// index.js
-import {a} from './a.js';
-console.log(a); // 1
-```
+![](rage.gif)
 
 ---
 
@@ -1200,15 +873,19 @@ show.name  // Property 'name' does not exist on type 'tvShow'.
 
 ---
 
-## Andra ES7 features
+## Typescript - The bad part
 
-- System global: https://github.com/tc39/proposal-global
-- Call constructor: https://github.com/tc39/ecma262/blob/master/workingdocs/callconstructor.md
-- observable: https://github.com/zenparsing/es-observable
-- decorators: https://github.com/wycats/javascript-decorators/blob/master/README.md
-- async/await https://github.com/tc39/ecmascript-asyncawait
-- SIMD: http://tc39.github.io/ecmascript_simd/
-- This binding: https://github.com/zenparsing/es-function-bind
+- ≈12k loc files
+- non-module
+- differ from ecma262
+
+---
+
+## Flow type + babel = <3
+
+---
+
+## Song Script
 
 ---
 
