@@ -52,43 +52,7 @@ Okej, låt oss böja med några få nyhter i ES6. När jag började skriva denna
 
 ---
 
-## var, let and const
-
-```javascript
-if (true) {
-    var a = 1;
-}
-console.log(a); // 1
-```
-
----
-
-## var, let and const
-
-```javascript
-if (true) {
-    let a = 1;
-}
-console.log(a); // ReferenceError: x is not defined
-```
-
----
-
-## var, let and const
-
-```javascript
-if (true) {
-    let a = 1;
-}
-console.log(a); // ReferenceError: x is not defined
-```
-
-var => Function scope
-let => Block scope
-
----
-
-## var, let and const
+## const
 
 ```javascript
 const a = 1;
@@ -172,146 +136,6 @@ for (let value of arr) { // Cannot read property 'Symbol(Symbol.iterator)' of un
 arr.forEach(v => console.log(v)); // Cannot read property 'forEach' of undefined
 ```
 
----
-
-## Modules
-
-### CommonJS
-
-```javascript
-// circle.js
-exports.area = r => {
-    return 3.14 * r * r;
-};
-```
-
-```javascript
-// index.js
-const circle = require('./circle.js');
-circle.area(2)
-```
-
----
-
-## Modules
-
-### AMD
-
-```javascript
-// circle.js
-define(['circle'], () => {
-
-    return {
-        area(r) {
-          return 3.14 * r * r;
-        }
-    };
-
-});
-```
-
-```javascript
-// index.js
-require(['circle'], circle => {
-    circle.area(2);
-});
-```
-
----
-
-## Modules
-
-### SystemJS
-
-```javascript
-// circle.js
-define(function() {
-  return {
-      area(r) {
-        return 3.14 * r * r;
-      }
-  };
-});
-```
-
-```javascript
-// index.js
-const circle = require('./circle.js');
-circle.area(2);
-```
-
----
-
-## Modules
-
-### ES6
-
-```javascript
-// circle.js
-const area = r => {
-    return 3.14 * r * r;
-};
-
-export {area};
-```
-
-```javascript
-// index.js
-import {area} from './circle.js';
-area(2)
-```
-
----
-
-## Modules
-
-### ES6
-
-```javascript
-const area = r => Math.PI * r * r;
-const perimeter = r => Math.PI * 2 * r;
-
-export {area, perimeter};
-export {area as calculateArea};
-export default area;
-
-export default {area, perimeter};
-// same as:
-export default {area: area, perimeter: perimeter};
-// same as:
-const modulesToExport = {area: area, perimeter: perimeter};
-export default modulesToExport;
-```
-
----
-
-## Modules
-
-### ES6
-
-```javascript
-export {area, perimeter};
-import {area, perimeter} from './circle.js';
-
-export {area, perimeter};
-import * as circle from './circle.js';
-circle.area(2);
-
-export {area as calculateArea};
-import {calculateArea} from './circle.js';
-calculateArea(2);
-
-export default area;
-import area from './circle.js';
-area(2);
-
-export default {area, perimeter};
-import circle from './circle.js';
-circle.area(2);
-```
-
----
-
 ## Promises
 ^ Min favorit! Har funits länge nu men är entligen med i specifikationen
 
@@ -355,8 +179,9 @@ function findShowById(show) {
         .catch(() => repo.getShowByTheTvDbId(show.ids.theTvDb))
         .catch(() => repo.getShowByImdbId(show.ids.imdb))
         .catch(error => {
-            throw new MissingShowError('Can not find show:' + error);
-        });
+            throw new MissingShowError('Can not find show', error);
+        })
+        .then(result => console.log('Woop Woop! We have a result', result));
 }
 ```
 
@@ -379,6 +204,10 @@ Det går inte att avbryta ett promises. XMLHttpRequest
 ## Reactive Programming (rxjs)
 
 ^ Jag kommer inte hinna gå igenom detta i ditalj men Angular 2 har en tät kopling till just Reactive Programming så jag kommer gå igenom det övergripande
+
+---
+
+![inline](observe-vs-promises.png)
 
 ---
 
@@ -451,11 +280,6 @@ source.subscribe(
 ```
 
 ---
-
----
-
-## Tail Calls
-^ Wii, detta kommer ni kanske inte ikontakt med idag men det gör att man kan skriva funktionel programering i javascript på allval
 
 ---
 
@@ -552,60 +376,6 @@ myClass.db.connectionString // 'user:pass@local'
 ```javascript
 class MrWhite {
 
-    name = 'Heisenberg';
-
-    knocking() {
-        return 'I am the one who knocks.';
-    }
-
-}
-```
-
----
-
-## Decorators
-
-```javascript
-class MrWhite {
-
-    get name() {
-        return 'Heisenberg';
-    }
-
-    set name() {}
-
-    knocking() {
-        return 'I am the one who knocks.';
-    }
-
-}
-```
-
----
-
-## Decorators
-
-```javascript
-class MrWhite {
-
-    knocking() {
-        return 'I am the one who knocks.';
-    }
-
-}
-Object.defineProperty(MrWhite.prototype, 'name', {
-    value: 'Heisenberg',
-    writable: false
-});
-```
-
----
-
-## Decorators
-
-```javascript
-class MrWhite {
-
     @readOnly name = 'Heisenberg';
 
     knocking() {
@@ -617,57 +387,6 @@ class MrWhite {
 function readOnly(target, name, descriptor) {
     descriptor.writable = false;
 }
-```
-
----
-
-## Decorators
-
-```javascript
-class MrWhite {
-
-    @readOnly(true)
-    name = 'Heisenberg';
-
-    knocking() {
-        return 'I am the one who knocks.';
-    }
-
-}
-
-function readOnly(isReadOnly) {
-    return (target, name, descriptor) => {
-        descriptor.writable = !isReadOnly;
-    }
-}
-```
-
----
-
-## Decorators
-
-```javascript
-function canCook(canHeCook) {
-    return function(target) {
-        target.canCook = canHeCook;
-    };
-}
-
-@canCook(true)
-class MrWhite {}
-
-// Same as:
-
-var MrWhite = (function () {
-  class MrWhite {
-  }
-
-  MrWhite = canCook(true)(MrWhite) || MrWhite;
-  return MrWhite;
-})();
-
-const mrWhite = new MrWhite();
-mrWhite.canCook // true
 ```
 
 ---
@@ -793,20 +512,6 @@ function add(a, b, c) {
 const result = add(obj.firstNumber, obj.secondNumber, obj.threadNunber);
 console.log(result); // NaN
 ```
-
----
-
-## Typescript
-
-```javascript
-function area(r) {
-    return Math.PI * r * r;
-}
-
-const result = area('1O');
-```
-
-^ Typescript hjälper till med detta. Dock kan det också sätta keppar i hjulet.
 
 ---
 
@@ -962,9 +667,7 @@ import {Component} from 'angular2/core';
 export class AppComponent {
   title = 'Breaking Bad';
   episodes = [
-    'Live Free or Die',
-    'Madrigal',
-    'Hazard Pay'
+    'Live Free or Die', 'Madrigal', 'Hazard Pay'
   ];
 }
 ```
@@ -1138,6 +841,48 @@ export class SearchComponent {
 
 ---
 
+```javascript
+import {Component, Input, Output, EventEmitter, Directive} from 'angular2/core';
+
+@Component({
+    selector: 'quote-generator',
+    template: `<button (click)="onClick()">{{buttonText}}</button>`
+})
+class QuoteGeneratorComponent {
+    @Input() buttonText = '';
+    @Output() buttonClick = new EventEmitter();
+    quotes = ['Say my name', 'I am the one who knocks', 'Science bitch', 'Stay out of my territory'];
+
+    onClick() {
+      const random = Math.floor((Math.random() * this.quotes.length));
+      this.buttonClick.next(this.quotes[random]);
+    }
+}
+```
+
+---
+
+```javascript
+@Component({
+    selector: 'quote',
+    template: `
+        <quote-generator [buttonText]="buttonText" (buttonClick)="updateQuote($event)"></quote-generator>
+        {{quoteText}}
+    `,
+    directives: [QuoteGeneratorComponent]
+})
+export class SearchComponent {
+    buttonText = 'Click me';
+    quoteText = '';
+
+    updateQuote(event) {
+      this.quoteText = event;
+    }
+}
+```
+
+---
+
 ## dependency injection
 
 ---
@@ -1156,7 +901,7 @@ class QuoteService {
 export class QuoteComponent {
   quoteText = '';
   constructor(service: QuoteService) {
-    this.quoteText = service.test;
+    this.quoteText = service.quote;
   }
 }
 ```
@@ -1224,7 +969,7 @@ class QuoteService {
 export class QuoteComponent {
   quoteText = '';
   constructor(service: Service) {
-    this.quoteText = service.test;
+    this.quoteText = service.quote;
   }
 }
 ```
