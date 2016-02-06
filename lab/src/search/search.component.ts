@@ -1,44 +1,39 @@
 import {Component, EventEmitter} from 'angular2/core';
+import {SearchInputComponent} from './search-input';
+import {SearchResult} from './search-result';
 import {TVMaze} from '../lib/tv-maze';
 
 @Component({
-    selector: 'serach-show',
+    selector: 'search-show',
     template: `
-        <form>
-            <div class="input-group">
-                <input type="search" class="form-control" (keyup)="onKeyUp($event)">
-                <span class="input-group-btn">
-                    <button class="btn btn-primary">Search</button>
-                </span>
-            </div>
-        </form>
-        <div *ngFor="#show of searchResult">
-            {{show.name}}
-        </div>
-    `
+        <search-input (search)="onSearch($event)"></search-input>
+        <search-result [resultStream]="searchResultStream" (subscribe)="onSubscribeShow($event)"></search-result>
+    `,
+    directives: [SearchInputComponent, SearchResult]
 })
 class SearchComponent {
     tvMaze: TVMaze;
     searchEmitter = new EventEmitter<string>();
-    searchResult = [];
+    searchResultStream;
 
     constructor(tvMaze: TVMaze) {
         this.tvMaze = tvMaze;
         this.bindSearchEvent();
     }
 
-    onKeyUp(event) {
-        this.searchEmitter.emit(event.target.value);
+    onSearch(term) {
+        this.searchEmitter.emit(term);
+    }
+
+    onSubscribeShow(show) {
+        console.log(show);
     }
 
     bindSearchEvent() {
-        this.searchEmitter
+        this.searchResultStream = this.searchEmitter
             .filter(term => term.length >= 2)
             .debounceTime(500)
-            .switchMap((term: any) => this.tvMaze.searchShow(term))
-            .subscribe(
-                (result: any) => this.searchResult = result
-            );
+            .switchMap((term: any) => this.tvMaze.searchShow(term));
     }
 
 }

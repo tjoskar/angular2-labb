@@ -17,7 +17,11 @@ class TVMaze {
         return this.http
             .get(`${BASE_URL}search/shows?q=${query}`)
             .map(res => res.json())
-            .map((shows: Array<{show: any}>) => shows.map(show => show.show));
+            .map((shows: Array<{show: any}>) => shows.map(show => show.show))
+            .map((shows: any[]) => shows.map(show => {
+                show.premiered = new Date(show.premiered);
+                return show;
+            }));
     }
 
 }
