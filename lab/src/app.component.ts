@@ -1,18 +1,21 @@
 import {Component} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {UpcomingShows} from './upcoming/upcoming.component';
+import {SearchComponent} from './search/search.component';
 
 @Component({
     selector: 'my-app',
     template: `
         <div class="container">
+            <a [routerLink]="['SearchShow']">Search</a>
             <router-outlet></router-outlet>
         </div>
     `,
     directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([
-    {path: '/', name: 'UpcomingShows', component: UpcomingShows, useAsDefault: true}
+    {path: '/', name: 'UpcomingShows', component: UpcomingShows, useAsDefault: true},
+    {path: '/search', name: 'SearchShow', component: SearchComponent}
 ])
 class AppComponent {
 

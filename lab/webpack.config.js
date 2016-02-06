@@ -14,6 +14,7 @@ module.exports = {
             'zone.js/dist/long-stack-trace-zone',
             'angular2/platform/browser',
             'angular2/core',
+            'angular2/http',
             'angular2/router'
         ]
     },
