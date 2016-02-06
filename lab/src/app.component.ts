@@ -1,9 +1,21 @@
 import {Component} from 'angular2/core';
+import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {UpcomingShows} from './upcoming/upcoming.component';
 
 @Component({
     selector: 'my-app',
-    template: `<h1>I'm the one who knocks</h1>`
+    template: `
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+    `,
+    directives: [ROUTER_DIRECTIVES]
 })
-class AppComponent { }
+@RouteConfig([
+    {path: '/', name: 'UpcomingShows', component: UpcomingShows, useAsDefault: true}
+])
+class AppComponent {
+
+}
 
 export {AppComponent};
