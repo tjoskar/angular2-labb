@@ -1,41 +1,23 @@
 import {Component} from 'angular2/core';
-
-const staticShows = [{
-        'name': 'Game of Thrones',
-        'image': {
-            'medium': 'http://tvmazecdn.com/uploads/images/medium_portrait/0/581.jpg'
-        },
-        'summary': 'Based on the bestselling book series A Song of Ice and Fire by George R.R. Martin'
-    }, {
-        'name': 'Breaking Bad',
-        'image': {
-            'medium': 'http://tvmazecdn.com/uploads/images/medium_portrait/0/2400.jpg'
-        },
-        'summary': 'Breaking Bad follows protagonist Walter White'
-    }
-];
+import {SubscribeService} from '../lib/providers';
+import {ShowComponent} from './show.component';
 
 @Component({
-  selector: 'upcoming-shows',
-  template: `
-    <h1>Upcoming shows</h1>
-    <div *ngFor="#show of shows">
-        <p>Name: {{show.name}}</p>
-        <p>Summary: {{show.summary}}</p>
-        <img [src]="show.image?.medium" />
-    </div>
-    <div class="alert alert-warning"
-      [hidden]="shows.length > 0">
-      You don't follow any shows
-    </div>
-  `
+    selector: 'upcoming-shows',
+    template: `
+        <h1>Upcoming shows</h1>
+        <show *ngFor="#show of shows" [show]="show"></show>
+        <div class="alert alert-warning" [hidden]="shows.length > 0">
+            You don't follow any shows
+        </div>
+    `,
+    directives: [ShowComponent]
 })
 class UpcomingShows {
-    public shows;
+    shows = [];
 
-    constructor() {
-      console.log('Upcoming shows');
-      this.shows = staticShows;
+    constructor(service: SubscribeService) {
+        this.shows = service.getAllSubscribeShows();
     }
 
 }

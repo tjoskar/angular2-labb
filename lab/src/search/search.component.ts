@@ -1,7 +1,8 @@
 import {Component, EventEmitter} from 'angular2/core';
+import {Router} from 'angular2/router';
 import {SearchInputComponent} from './search-input';
 import {SearchResult} from './search-result';
-import {TVMaze} from '../lib/tv-maze';
+import {TVMaze, SubscribeService} from '../lib/providers';
 
 @Component({
     selector: 'search-show',
@@ -13,11 +14,15 @@ import {TVMaze} from '../lib/tv-maze';
 })
 class SearchComponent {
     tvMaze: TVMaze;
+    service: SubscribeService;
+    router: Router;
     searchEmitter = new EventEmitter<string>();
     searchResultStream;
 
-    constructor(tvMaze: TVMaze) {
+    constructor(tvMaze: TVMaze, router: Router, service: SubscribeService) {
         this.tvMaze = tvMaze;
+        this.service = service;
+        this.router = router;
         this.bindSearchEvent();
     }
 
@@ -26,7 +31,8 @@ class SearchComponent {
     }
 
     onSubscribeShow(show) {
-        console.log(show);
+        this.service.subscribeShow(show.id)
+            .subscribe(() => this.router.navigate(['UpcomingShows']));
     }
 
     bindSearchEvent() {

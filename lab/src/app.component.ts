@@ -5,12 +5,7 @@ import {SearchComponent} from './search/search.component';
 
 @Component({
     selector: 'my-app',
-    template: `
-        <div class="container">
-            <a [routerLink]="['SearchShow']">Search</a>
-            <router-outlet></router-outlet>
-        </div>
-    `,
+    templateUrl: './base-template.html',
     directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([

@@ -1,0 +1,17 @@
+
+show {
+    display: flex;
+}
+
+.nav-link:hover, .router-link-active {
+    color: #fff;
+    background-color: #0275d8;
+}
+
+.container {
+    margin-top: 10px;
+}
+
+h1 {
+    margin: .5rem 0;
+}
