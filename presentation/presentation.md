@@ -136,6 +136,8 @@ for (let value of arr) { // Cannot read property 'Symbol(Symbol.iterator)' of un
 arr.forEach(v => console.log(v)); // Cannot read property 'forEach' of undefined
 ```
 
+---
+
 ## Promises
 ^ Min favorit! Har funits länge nu men är entligen med i specifikationen
 
@@ -444,10 +446,10 @@ I javascript har vi 7 olika typer:
 
 ## Typescript
 
-- typeof Array() === 'object'
-- typeof ( new Map() ) === 'object'
-- typeof NaN === 'number'
-- typeof null === 'object'
+- `typeof Array() === 'object'`
+- `typeof ( new Map() ) === 'object'`
+- `typeof NaN === 'number'`
+- `typeof null === 'object'`
 
 ^ Man kan tycka vad man vill om typning men eftersom vi uppenbarlige har olika datatyper så är det ide att annotera metoder.
 
