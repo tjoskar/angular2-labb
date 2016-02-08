@@ -12,7 +12,10 @@ module.exports = {
             'rxjs',
             'zone.js/dist/zone-microtask',
             'zone.js/dist/long-stack-trace-zone',
-            'angular2/platform/browser'
+            'angular2/platform/browser',
+            'angular2/core',
+            'angular2/http',
+            'angular2/router'
         ]
     },
     output: {
@@ -21,7 +24,12 @@ module.exports = {
     },
     module: {
         loaders: [{
-            test: /\.ts$/, loader: 'ts', exclude: /node_modules/
+            test: /\.ts$/,
+            loader: 'ts',
+            exclude: /node_modules/
+        }, {
+            test: /\.css$/,
+            loader: 'style!css'
         }],
         noParse: [/zone\.js\/dist\/.+/]
     },
@@ -36,7 +44,7 @@ module.exports = {
         contentBase: 'src'
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
+        new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js', Infinity),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.DedupePlugin()
     ]

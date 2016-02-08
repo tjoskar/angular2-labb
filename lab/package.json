@@ -2,20 +2,23 @@
   "name": "angular2-lab",
   "version": "1.0.0",
   "private": true,
-  "author": "Oskar Karlsson <kontakta@oskarkarlsson.nu",
+  "author": "Oskar Karlsson <kontakta@oskarkarlsson.nu>",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --progress",
     "build": "webpack --progress --optimize-minimize"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.2",
+    "angular2": "2.0.0-beta.3",
+    "bootstrap": "^4.0.0-alpha.2",
     "es6-shim": "0.34.2",
     "reflect-metadata": "0.1.3",
     "rxjs": "5.0.0-beta.1",
     "zone.js": "0.5.10"
   },
   "devDependencies": {
+    "css-loader": "^0.23.1",
+    "style-loader": "^0.13.0",
     "ts-loader": "^0.8.0",
     "typescript": "~1.7.5",
     "webpack": "~1.12.9",
