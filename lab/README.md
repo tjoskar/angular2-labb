@@ -2,7 +2,7 @@
 
 ## Prologue - Get started
 
-#### Set up the project
+### Set up the project
 
 - Clone the project:
 
@@ -27,12 +27,12 @@ $ npm start
 
 Looking good? - Yes?
 
-#### Set up your text editor:
+### Set up your text editor:
 
-##### You must choose, but choose wisely:
+#### You must choose, but choose wisely:
 Just kidding, you can change whenever you like.
 
-###### Visual studio code
+#### Visual studio code
 https://code.visualstudio.com/
 
 pros:
@@ -45,7 +45,7 @@ cons:
 - Can only change color theme (not ui theme)
 - No tabs? - Can get confusing
 
-###### Atom (My current favorite)
+#### Atom (My current favorite)
 https://atom.io/
 
 Install `atom-typescript` addon:
@@ -65,7 +65,7 @@ cons:
 - `atom-typescript` can have a bad day and are not always 100% stable
 
 
-###### Sublime Text 3
+#### Sublime Text 3
 https://www.sublimetext.com/3
 
 https://github.com/Microsoft/TypeScript-Sublime-Plugin
@@ -78,7 +78,7 @@ cons:
 - The typescript addon feels buggy
 
 
-###### Webstorm
+#### Webstorm
 https://www.jetbrains.com/webstorm/
 
 pros:
@@ -89,7 +89,7 @@ cons:
 - Uses typescript 1.6 :/
 
 
-###### Vim
+#### Vim
 
 pros:
 - Only the cool kids use vim
