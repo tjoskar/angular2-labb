@@ -11,7 +11,7 @@ import {MyInputComponent} from './testing/my-input.component';
 })
 @RouteConfig([
     {path: '/', name: 'UpcomingShows', component: UpcomingShows, useAsDefault: true},
-    {path: '/test', name: 'MyInput', component: MyInputComponent},
+    {path: '/testing', name: 'MyInput', component: MyInputComponent},
     {path: '/search', name: 'SearchShow', component: SearchComponent}
 ])
 class AppComponent {
