@@ -1,7 +1,7 @@
 build-lists: true
 autoscale: true
 
-![](bg.png)
+![](img/bg.png)
 
 ^ Som ni redan vet så kommer huvud fokus av denna presentation och kväll vara tillängnad åt Angular 2 men låt oss först prata lite snabbt om ES6
 
@@ -209,7 +209,7 @@ Det går inte att avbryta ett promises. XMLHttpRequest
 
 ---
 
-![inline](observe-vs-promises.png)
+![inline](img/observe-vs-promises.png)
 
 ---
 
@@ -475,7 +475,7 @@ function area(r: number): number {
 
 ---
 
-![](dont-like-it.gif)
+![](img/dont-like-it.gif)
 
 ---
 
@@ -530,7 +530,7 @@ Vissa är inte återgärdade.
 
 ---
 
-![](rage.gif)
+![](img/rage.gif)
 
 ---
 
@@ -799,7 +799,7 @@ class NgModel {
 
 ### Component in component
 
-![](doll.gif)
+![](img/doll.gif)
 
 ---
 
@@ -1065,7 +1065,7 @@ setInterval(() => {
 
 ---
 
-![inline](monkey-patch.jpg)
+![inline](img/monkey-patch.jpg)
 
 ---
 
@@ -1129,7 +1129,7 @@ angular === react // false
 
 ---
 
-![inline](server-render.png)
+![inline](img/server-render.png)
 
 https://jakearchibald.com/2016/streams-ftw/
 
