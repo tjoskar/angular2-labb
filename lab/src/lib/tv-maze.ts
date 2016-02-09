@@ -32,7 +32,7 @@ class TVMaze {
             .map(res => res.json())
             .map((show: any) => {
                 show.episodes = show._embedded.episodes;
-                show._embedded.episodes = undefined;
+                show._embedded = undefined;
                 return show;
             });
     }
