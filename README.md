@@ -176,7 +176,7 @@ Create a new component, a search component, with the following criteria:
 ```javascript
 searchShow('game of thrones')
 	.subscribe(
-		show => console.log(show) // this will print an array of shows
+		showsResult => console.log(showsResult) // this will print an array of shows
 		error => console.log(':(', error)
 	);
 ```
@@ -216,7 +216,7 @@ Example markup to use:
 – Have no idea where to start? Take a look at this skeleton code: https://gist.github.com/tjoskar/3e568131a90b67422a8e (don't copy without understanding, instead ask a friend. I'm your friend)
 
 **_Remember!_**
-Update the routing in `app.component.ts`.
+Update the routing in `app.component.ts`and `base-template.html`.
 
 ## Chapter 3 - Make it count
 
@@ -230,6 +230,9 @@ Challenge:
 - The user should be able to view all episodes for a show (I don't have any solution for this but it should be fairly easy).
 
 Skeleton code (if you want): https://gist.github.com/tjoskar/9402044f45dc7d2ecbb0
+
+**_Remember!_**
+Update the routing in `app.component.ts`and `base-template.html`.
 
 ## Chapter 4 - Don't tell me what to do
 
