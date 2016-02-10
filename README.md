@@ -1,5 +1,7 @@
 # Angular 2 Lab
 
+What we will create: http://tjoskar.github.io/angular2-labb/
+
 ## Prologue - Get started
 
 ### Set up the project
@@ -41,7 +43,7 @@ pros:
 - Fast
 
 cons:
-- Few addons
+- Few add-ons
 - Can only change color theme (not ui theme)
 - No tabs? - Can get confusing
 
@@ -53,12 +55,12 @@ Install `atom-typescript` addon:
 $ apm install atom-typescript
 ```
 
-Or install the addon through the settings page: `cmd+,` (or `ctr+,` on windows/linux)
+Or install the add-on through the settings page: `cmd+,` (or `ctr+,` on windows/linux)
 
 pros:
 - Extremely easy to customize! If you want to change something, just do it!
 - Good integration with git (anotate changes in tree- and file view)
-- Massive collection of addons
+- Massive collection of add-ons
 
 cons:
 - Slow at startup and can get slow for large files (it will literally die for files >2mb)
@@ -75,7 +77,7 @@ pros:
 - Every one loves sublime text 💖
 
 cons:
-- The typescript addon feels buggy
+- The typescript add-on feels sketchy
 
 
 #### Webstorm
@@ -90,12 +92,13 @@ cons:
 
 
 #### Vim
+https://github.com/Valloric/YouCompleteMe
 
 pros:
-- Only the cool kids use vim
+- It's cool
 
 cons:
-- No one can exit vim
+- You have to know vim
 
 
 ## Chapter 1 - Feel the flow
