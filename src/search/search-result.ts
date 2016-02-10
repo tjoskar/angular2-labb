@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {DateStringPipe} from './date-string.pipe';
 
 @Component({
     selector: 'search-result',
@@ -11,9 +12,10 @@ import {Component, Input, Output, EventEmitter} from 'angular2/core';
     template: `
         <figure class="figure" *ngFor="#show of searchResultStream | async" (click)="onSubscribe(show)">
             <img [src]="show.image?.medium" [alt]="show.name" class="figure-img img-fluid img-rounded" />
-            <figcaption class="figure-caption">{{show.name}} ({{ show.premiered | date:'y' }})</figcaption>
+            <figcaption class="figure-caption">{{show.name}} ({{ show.premiered | dateString:'year' }})</figcaption>
         </figure>
-    `
+    `,
+    pipes: [DateStringPipe]
 })
 class SearchResult {
     @Input('resultStream') searchResultStream = [];
