@@ -15,3 +15,12 @@ show {
 h1 {
     margin: .5rem 0;
 }
+
+figure {
+    margin: 10px;
+    width: 200px;
+}
+
+.show-poster {
+    margin: 0 10px 10px 0;
+}
