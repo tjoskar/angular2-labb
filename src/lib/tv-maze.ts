@@ -1,6 +1,7 @@
 import {Injectable} from 'angular2/core';
 import {Http} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
+import {Show} from './interfaces/show';
 
 const BASE_URL = 'http://api.tvmaze.com/';
 
@@ -13,24 +14,20 @@ class TVMaze {
         this.http = http;
     }
 
-    searchShow(query: string): Observable<any> {
+    searchShow(query: string): Observable<Show[]> {
         return this.http
             .get(`${BASE_URL}search/shows?q=${query}`)
             .retry(3) // Naive
             .map(res => res.json())
-            .map((shows: Array<{show: any}>) => shows.map(show => show.show))
-            .map((shows: any[]) => shows.map(show => {
-                show.premiered = new Date(show.premiered);
-                return show;
-            }));
+            .map((shows: Array<{show: Show}>) => shows.map(show => show.show));
     }
 
-    getShow(showId: number): Observable<any> {
+    getShow(showId: number): Observable<Show> {
         return this.http
             .get(`${BASE_URL}shows/${showId}?embed=episodes`)
             .retry(3) // Naive
             .map(res => res.json())
-            .map((show: any) => {
+            .map((show: Show) => {
                 show.episodes = show._embedded.episodes;
                 show._embedded = undefined;
                 return show;

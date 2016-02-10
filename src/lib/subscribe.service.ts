@@ -1,4 +1,5 @@
 import {Injectable} from 'angular2/core';
+import {Show} from './interfaces/show';
 import {Storage} from './storage/storage';
 import {TVMaze} from './tv-maze';
 
@@ -14,7 +15,7 @@ class SubscribeService {
         this.tvMaze = tvMaze;
     }
 
-    getAllSubscribeShows() {
+    getAllSubscribeShows(): Show[] {
         const subscribedShows = this.storage.get(STORAGE_KEY);
         return Array.isArray(subscribedShows) ? subscribedShows : [];
     }
@@ -22,7 +23,7 @@ class SubscribeService {
     subscribeShow(showId: number) {
         return this.tvMaze.getShow(showId)
             .map(show => {
-                const subscribedShows = this.storage.get(STORAGE_KEY);
+                const subscribedShows = this.storage.get<Show[]>(STORAGE_KEY);
                 if (!Array.isArray(subscribedShows)) {
                     this.storage.set(STORAGE_KEY, [show]);
                 } else {
@@ -33,8 +34,8 @@ class SubscribeService {
         );
     }
 
-    unSubscribeShow(show) {
-        const subscribedShows = this.storage.get(STORAGE_KEY);
+    unSubscribeShow(show: Show) {
+        const subscribedShows = this.storage.get<Show[]>(STORAGE_KEY);
         if (!Array.isArray(subscribedShows)) {
             return;
         } else {

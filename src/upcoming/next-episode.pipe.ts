@@ -1,11 +1,12 @@
 import {Pipe} from 'angular2/core';
+import {Episode} from '../lib/interfaces/episode';
 
 @Pipe({
     name: 'nextEpisode'
 })
 class NextEpisodePipe {
 
-    transform(episodes) {
+    transform(episodes: Episode[]) {
         const now = Date.now();
         const nextEpisode = episodes.find(episode => {
             return (new Date(episode.airdate)).getTime() > now;

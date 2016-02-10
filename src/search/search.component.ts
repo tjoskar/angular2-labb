@@ -39,7 +39,7 @@ class SearchComponent {
         this.searchResultStream = this.searchEmitter
             .filter(term => term.length >= 2)
             .debounceTime(500)
-            .switchMap((term: any) => this.tvMaze.searchShow(term));
+            .switchMap((term: string) => this.tvMaze.searchShow(term));
     }
 
 }
