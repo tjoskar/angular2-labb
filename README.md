@@ -103,7 +103,7 @@ cons:
 
 ## Chapter 1 - Feel the flow
 
-1. Start off by navigate to `http://localhost:9000/testing`.
+1. Start off by navigate to `http://localhost:9000/`.
 1. Open up `testing/my-input.component.ts` in your (new) favorite editor.
 1. Play around and get a feeling of how events and data binding works.
 
