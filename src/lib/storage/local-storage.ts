@@ -18,14 +18,12 @@ class LocalStorage implements StorageInterface {
         }
     }
 
-    set(key: string, value: any): boolean {
+    set(key: string, value: any): void {
         localStorage.setItem(PREFIX + key, JSON.stringify(value));
-        return true;
     }
 
-    remove(key: string): boolean {
+    remove(key: string): void {
         localStorage.removeItem(key);
-        return true;
     }
 
 }
