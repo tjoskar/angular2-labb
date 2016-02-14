@@ -26,6 +26,10 @@ class LocalStorage implements StorageInterface {
         localStorage.removeItem(key);
     }
 
+    __clearAll() {
+        localStorage.clear();
+    }
+
 }
 
 export default LocalStorage;
