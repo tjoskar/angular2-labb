@@ -8,9 +8,10 @@ module.exports = function(config) {
             // and require all tests in there
             { pattern: 'test.bundle.js', watched: false }
         ],
-        preprocessors: { 'test.bundle.js': ['webpack'] },
+        preprocessors: { 'test.bundle.js': ['webpack', 'sourcemap'] },
 
         webpack: {
+            devtool: 'inline-source-map',
             resolve: {
                 extensions: ['', '.ts', '.js']
             },
