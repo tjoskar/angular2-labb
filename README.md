@@ -234,7 +234,39 @@ Skeleton code (if you want): https://gist.github.com/tjoskar/9402044f45dc7d2ecbb
 **_Remember!_**
 Update the routing in `app.component.ts`and `base-template.html`.
 
-## Chapter 4 - Don't tell me what to do
+## Chapter 4 - Test me
+
+Writing and executing test cases for front-end are hard. But nevertheless important.
+(almost) All browsers vendors implement the same features in different ways, they have different bugs, you do not control the upgrade cycle. - You are not in control over your own code.
+
+Furthermore; Different devices have different input methods (mouse, keyboard, touch) and different outputs to consider (desktop, laptop, tablet, mobile, retina display, screenreader), and the end user can adapt the output (enlarging text, changing the color settings, etc.).
+
+So you need tests, that's for sure.
+
+### Unit test
+> Let's get started by writing some unit tests.
+
+To be able to run the same test case in different browsers, we need a test-runner and not any test runner. We need a test runner that can start up and communicated with different browsers.
+We have two options: [Testem](https://github.com/testem/testem) and [Karma](http://karma-runner.github.io/). We will go with Karma for now.
+
+We will also need to choose a test-framework (you wouldn't get far with `console.assert`). I would have chosen [AVA](https://github.com/sindresorhus/ava) or maybe [mocha](https://mochajs.org/) but unfortunately they have made the choice for us, [Jasmine](http://jasmine.github.io/2.4/introduction.html), so lets go with the flow.
+
+First we need to install a few new dependencies (they should already be listed in you `package.json`):
+```
+jasmine-core@2.4.1               // Core lib for jasmine
+karma-jasmine@0.3.7              // So Karma understand jasmine
+karma-mocha-reporter@1.1.5       // A better test reporter
+karma-phantomjs-launcher@1.0.0   // So Karma can start PhantomJS
+karma-sourcemap-loader@0.3.7     // So Karma understands sourcemaps
+karma-webpack@1.7.0              // So Karma and webpack can talk to each other
+phantomjs-polyfill@0.0.1         // PhantomJS is old
+phantomjs-prebuilt@2.1.4         // PhantomJS, itself
+source-map-loader@0.1.5          // So webpack understand sourcemaps
+```
+
+Good, lets now take a look at `karma.conf.js`.
+
+## Chapter 5 - Don't tell me what to do
 
 ### Change detection strategy
 
@@ -281,7 +313,7 @@ class YooBoy {}
 ```
 
 
-## Chapter 4 - Make it fast
+## Chapter 6 - Make it fast
 OBS! Proposed solution do not exist.
 
 ### Use web workers!
