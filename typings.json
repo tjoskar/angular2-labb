@@ -1,5 +1,6 @@
 {
   "ambientDependencies": {
-    "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#dd638012d63e069f2c99d06ef4dcc9616a943ee4"
+    "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#dd638012d63e069f2c99d06ef4dcc9616a943ee4",
+    "simple-spy": "github:tjoskar/simple-spy/typings/simple-spy.d.ts#796dc9adc824cabd0506672adcd5e61c1d18fe22"
   }
 }

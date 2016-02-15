@@ -18,6 +18,8 @@
   },
   "devDependencies": {
     "css-loader": "^0.23.1",
+    "karma-chrome-launcher": "^0.2.2",
+    "simple-spy": "^1.0.3",
     "style-loader": "^0.13.0",
     "ts-loader": "^0.8.0",
     "typescript": "~1.7.5",
