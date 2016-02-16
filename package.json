@@ -6,7 +6,10 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --progress",
-    "build": "webpack --progress --optimize-minimize"
+    "build": "webpack --progress --optimize-minimize",
+    "test": "karma start",
+    "e2e": "protractor",
+    "e2e:debug": "protractor --elementExplorer"
   },
   "dependencies": {
     "angular2": "2.0.0-beta.3",
@@ -19,6 +22,7 @@
   "devDependencies": {
     "css-loader": "^0.23.1",
     "karma-chrome-launcher": "^0.2.2",
+    "protractor": "^3.1.1",
     "simple-spy": "^1.0.3",
     "style-loader": "^0.13.0",
     "ts-loader": "^0.8.0",
