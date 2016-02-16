@@ -14,7 +14,7 @@ import {LazyLoadImageDirective} from '../directive/lazy-load-image.directive';
         <div class="show-poster">
             <img
                 [lazyLoad]="show.image?.medium"
-                defaultImg="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                defaultImg="https://www.placecage.com/210/295"
                 [alt]="show.name"
                 class="img-rounded" />
         </div>
