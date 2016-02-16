@@ -2,13 +2,13 @@ const GameOfThrones = require('../data/show').GameOfThrones
 const shows = JSON.stringify(Array.from({length: 10}, () => GameOfThrones));
 
 const slowScroll = () => {
-    const c = Math.floor((document.body.scrollHeight - 1024) / 50);
+    let c = Math.floor((document.body.scrollHeight - 1024) / 50);
     const t = setInterval(() => {
         if (c <= 0) {
             clearInterval(t)
         };
 
-        window.scrollBy(0,50);
+        window.scrollBy(0, 50);
         c = c - 1;
     }, 100);
 };
@@ -35,7 +35,7 @@ describe('Lazy load images', () => {
 
         browser.wait(() => {
             const deferred = protractor.promise.defer();
-            setTimeout(() => deferred.fulfill(true), 5000)
+            setTimeout(() => deferred.fulfill(true), 5000);
             return deferred.promise;
         });
 
