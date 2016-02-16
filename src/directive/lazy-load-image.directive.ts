@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, Input} from 'angular2/core';
+import {Directive, ElementRef, Renderer, Input, EventEmitter} from 'angular2/core';
 import {Observable, Subscription} from 'rxjs';
 
 @Directive({
@@ -8,20 +8,24 @@ class LazyLoadImageDirective {
     @Input('lazyLoad') lazyImage;
     @Input('src') defaultImg;
     @Input() offset;
+    elementRef: ElementRef;
+    renderer: Renderer;
+    scroll = new EventEmitter();
     scrollSubscription: Subscription;
     errorSubscription: Subscription;
     viewportSize = {
         height: 0,
         width: 0
     };
-    elementRef: ElementRef;
 
     constructor(el: ElementRef, renderer: Renderer) {
         this.elementRef = el;
+        this.renderer = renderer;
     }
 
     ngAfterContentInit() {
         this.updateViewportOffset();
+        this.renderer.listenGlobal('window', 'scroll', () => this.scroll.emit(1));
 
         this.errorSubscription = Observable
             .fromEvent(this.elementRef.nativeElement, 'error')
@@ -31,7 +35,7 @@ class LazyLoadImageDirective {
         this.scrollSubscription = Observable
             .merge(
                 Observable.of(1), // Fake a scroll event
-                Observable.fromEvent(window, 'scroll')
+                this.scroll
             )
             .sampleTime(100)
             .filter(() => this.isVisible())
