@@ -5,8 +5,8 @@ import {Observable, Subscription} from 'rxjs';
     selector: '[lazyLoad]'
 })
 class LazyLoadImageDirective {
-    @Input('lazyLoad') src;
-    @Input() defaultImg;
+    @Input('lazyLoad') lazyImage;
+    @Input('src') defaultImg;
     @Input() offset;
     scrollSubscription: Subscription;
     errorSubscription: Subscription;
@@ -21,7 +21,6 @@ class LazyLoadImageDirective {
     }
 
     ngAfterContentInit() {
-        this.setDefaultImage();
         this.updateViewportOffset();
 
         this.errorSubscription = Observable
@@ -43,7 +42,7 @@ class LazyLoadImageDirective {
             .subscribe();
     }
 
-    setImage(image = this.src) {
+    setImage(image = this.lazyImage) {
         this.elementRef.nativeElement.src = image;
     }
 

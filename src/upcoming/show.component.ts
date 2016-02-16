@@ -13,8 +13,8 @@ import {LazyLoadImageDirective} from '../directive/lazy-load-image.directive';
     template: `
         <div class="show-poster">
             <img
+                src="https://www.placecage.com/210/295"
                 [lazyLoad]="show.image?.medium"
-                defaultImg="https://www.placecage.com/210/295"
                 [alt]="show.name"
                 class="img-rounded" />
         </div>
