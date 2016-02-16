@@ -249,7 +249,7 @@ So you need tests, that's for sure.
 To be able to run the same test case in different browsers, we need a test-runner and not any test runner. We need a test runner that can start up and communicated with different browsers.
 We have two options: [Testem](https://github.com/testem/testem) and [Karma](http://karma-runner.github.io/). We will go with Karma for now.
 
-We will also need to choose a test-framework (you wouldn't get far with `console.assert`). I would have chosen [AVA](https://github.com/sindresorhus/ava) or maybe [mocha](https://mochajs.org/) but unfortunately they have made the choice for us, [Jasmine](http://jasmine.github.io/2.4/introduction.html), so lets go with the flow.
+We will also need to choose a test-framework (you wouldn't get far with `console.assert`). I would have chosen [AVA](https://github.com/sindresorhus/ava) or maybe [mocha](https://mochajs.org/) but unfortunately the Angular team have already made the choice for us, [Jasmine](http://jasmine.github.io/2.4/introduction.html), so lets go with the flow.
 
 First we need to install a few new dependencies (they should already be listed in you `package.json`):
 ```
@@ -264,7 +264,17 @@ phantomjs-prebuilt@2.1.4         // PhantomJS, itself
 source-map-loader@0.1.5          // So webpack understand sourcemaps
 ```
 
-Good, lets now take a look at `karma.conf.js`.
+Since we are using typescript and `modules`, we need some way of bind all this modules so the browser can understand them, that is why we are using webpack. - Which is awesome but this require some extra work before we can run the test case.
+
+Take a look inside `karma.conf.js`. Karma, will only load one javascript-file (`test.bundle.js`) and pass it to webpack. This file will however load all test files.
+Take a look inside `test.bundle.js`. First of all we load some `polyfills`, angular stuff and similar. But then we use the the context method on `require` that webpack created in order to tell webpack what files we actually want to require or import. For each test-file we find we will call the context function that will require the file and load it up. Cool right?
+
+Now when you have a basic idea of front end testing works. Lets get started.
+
+Take first a look at: `lib/storage/test/local-storage.test.ts`. Looks straightforward right?
+Now take a look at `lib/test/subscribe.service.test.ts` for a more complex test case.
+
+-- Happy testing
 
 ## Chapter 5 - Don't tell me what to do
 
