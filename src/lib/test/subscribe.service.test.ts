@@ -1,6 +1,6 @@
 import {provide} from 'angular2/core';
 import {Http, BaseRequestOptions, Response, ResponseOptions} from 'angular2/http';
-import {it, describe, expect, beforeEach, beforeEachProviders, inject, injectAsync} from 'angular2/testing';
+import {it, describe, expect, beforeEach, beforeEachProviders, injectAsync} from 'angular2/testing';
 import {MockBackend} from 'angular2/http/testing';
 import {spy} from 'simple-spy';
 import {SubscribeService} from '../subscribe.service';
@@ -9,8 +9,11 @@ import {Storage} from '../storage/storage';
 
 const storage = {
     data: undefined,
-    get: spy(() => storage.data),
-    set: spy((key, data) => storage.data = data)
+    get: spy(() => Promise.resolve(storage.data)),
+    set: spy((key, data) => {
+        storage.data = data;
+        return Promise.resolve();
+    })
 };
 
 // Integration test
@@ -36,18 +39,18 @@ describe('Subscribe service', () => {
         storage.set.reset();
     });
 
-    it('should be able to get all subscribe shows', inject([SubscribeService], service => {
+    it('should be able to get all subscribe shows', injectAsync([SubscribeService], (service: SubscribeService) => {
         // Arrange
         const shows = [1, 2, 3];
         storage.data = shows;
 
         // Act
-        const subscribeShows = service.getAllSubscribeShows();
-
-        // Assert
-        expect(subscribeShows).toEqual(shows);
-        expect(storage.get.callCount).toEqual(1);
-        expect(storage.set.callCount).toEqual(0);
+        return service.getAllSubscribeShows()
+            .then(subscribeShows => {
+                expect(subscribeShows).toEqual(shows);
+                expect(storage.get.callCount).toEqual(1);
+                expect(storage.set.callCount).toEqual(0);
+            });
     }));
 
     it('should fetch show when subscribe', injectAsync([SubscribeService, MockBackend], (service: SubscribeService, backend: MockBackend) => {
@@ -63,11 +66,10 @@ describe('Subscribe service', () => {
         backend.connections.subscribe(c => c.mockRespond(new Response(responseOptions)));
 
         // Act and assert
-        return service.subscribeShow(5).map(() => {
+        return service.subscribeShow(5).then(() => {
             expect(storage.data[0].name).toEqual('Dexter');
             expect(storage.data[0].episodes).toBeAnInstanceOf(Array);
-        })
-        .toPromise();
+        });
     }));
 
     it('should append show to an existing list', injectAsync([SubscribeService, MockBackend], (service: SubscribeService, backend: MockBackend) => {
@@ -84,20 +86,15 @@ describe('Subscribe service', () => {
         storage.data = [1];
 
         // Act and assert
-        return new Promise((resolve, reject) => {
-            service.subscribeShow(5).subscribe(
-                () => {
-                    expect(storage.data[0]).toEqual(1);
-                    expect(storage.data[1].name).toEqual('Dexter');
-                    expect(storage.data[1].episodes).toBeAnInstanceOf(Array);
-                    resolve();
-                },
-                error => reject(error)
-            );
-        });
+        return service.subscribeShow(5)
+            .then(() => {
+                expect(storage.data[0]).toEqual(1);
+                expect(storage.data[1].name).toEqual('Dexter');
+                expect(storage.data[1].episodes).toBeAnInstanceOf(Array);
+            });
     }));
 
-    it('should unsubscribe show', inject([SubscribeService], (service: SubscribeService) => {
+    it('should unsubscribe show', injectAsync([SubscribeService], (service: SubscribeService) => {
         // Arrange
         storage.data = [{
             id: 5,
@@ -108,11 +105,10 @@ describe('Subscribe service', () => {
         }];
 
         // Act
-        service.unSubscribeShow(<any>{id: 5});
-
-        // Assert
-        expect(storage.data.length).toEqual(1);
-        expect(storage.data[0].name).toEqual('Lost');
+        return service.unSubscribeShow(<any>{id: 5}).then(() => {
+            expect(storage.data.length).toEqual(1);
+            expect(storage.data[0].name).toEqual('Lost');
+        });
     }));
 
 });

@@ -1,7 +1,7 @@
-interface StorageInterface {
-    get<T>(key: string): T;
-    set(key: string, value: any): void;
-    remove(key: string): void;
+interface StorageInterface<T> {
+    get(key: string): Promise<T | void>;
+    set(key: string, value: T): Promise<any>;
+    remove(key: string): Promise<any>;
 }
 
 export default StorageInterface;

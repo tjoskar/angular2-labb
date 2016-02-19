@@ -2,28 +2,31 @@ import {StorageInterface} from './storage-interface';
 
 const PREFIX = 'valtech_';
 
-class LocalStorage implements StorageInterface {
+class LocalStorage<T> implements StorageInterface<T> {
 
-    get<T>(key: string): T {
+    get(key: string): Promise<T | void> {
         const data = localStorage.getItem(PREFIX + key);
         if (data === undefined) {
-            return undefined;
+            return Promise.resolve(undefined);
         }
 
         try {
-            return JSON.parse(data);
-        } catch (e) {
-            console.warn(e);
+            return Promise.resolve(JSON.parse(data));
+        } catch (error) {
+            console.warn(error);
             this.remove(key);
+            return Promise.reject(error);
         }
     }
 
-    set(key: string, value: any): void {
+    set(key: string, value: T): Promise<void> {
         localStorage.setItem(PREFIX + key, JSON.stringify(value));
+        return Promise.resolve();
     }
 
-    remove(key: string): void {
+    remove(key: string): Promise<void> {
         localStorage.removeItem(key);
+        return Promise.resolve();
     }
 
     __clearAll() {

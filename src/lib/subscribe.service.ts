@@ -7,44 +7,45 @@ const STORAGE_KEY = 'subscribed-shows';
 
 @Injectable()
 class SubscribeService {
-    storage: Storage;
+    storage: Storage<Show[]>;
     tvMaze: TVMaze;
 
-    constructor(storage: Storage, tvMaze: TVMaze) {
+    constructor(storage: Storage<Show[]>, tvMaze: TVMaze) {
         this.storage = storage;
         this.tvMaze = tvMaze;
     }
 
-    getAllSubscribeShows(): Show[] {
-        const subscribedShows = this.storage.get(STORAGE_KEY);
-        return Array.isArray(subscribedShows) ? subscribedShows : [];
+    getAllSubscribeShows(): Promise<Show[]> {
+        return this.storage.get(STORAGE_KEY);
     }
 
-    subscribeShow(showId: number) {
-        return this.tvMaze.getShow(showId)
-            .map(show => {
-                const subscribedShows = this.storage.get<Show[]>(STORAGE_KEY);
-                if (!Array.isArray(subscribedShows)) {
-                    this.storage.set(STORAGE_KEY, [show]);
-                } else {
-                    subscribedShows.push(show);
-                    this.storage.set(STORAGE_KEY, subscribedShows);
+    subscribeShow(showId: number): Promise<void> {
+        const fetchShow = this.tvMaze
+            .getShow(showId)
+            .toPromise();
+        const fetchSubscribedShows = this.storage
+            .get(STORAGE_KEY)
+            .then(shows => Array.isArray(shows) ? shows : []);
+
+        return Promise.all<any>([fetchShow, fetchSubscribedShows])
+            .then(([show, shows]) => {
+                shows.push(show);
+                return this.storage.set(STORAGE_KEY, shows);
+            });
+    }
+
+    unSubscribeShow(show: Show): Promise<void> {
+        return this.storage.get(STORAGE_KEY)
+            .then(shows => {
+                if (!Array.isArray(shows)) {
+                    return;
                 }
-            }
-        );
-    }
-
-    unSubscribeShow(show: Show) {
-        const subscribedShows = this.storage.get<Show[]>(STORAGE_KEY);
-        if (!Array.isArray(subscribedShows)) {
-            return;
-        } else {
-            const index = subscribedShows.findIndex(s => s.id === show.id);
-            if (index > -1) {
-                subscribedShows.splice(index, 1);
-                this.storage.set(STORAGE_KEY, subscribedShows);
-            }
-        }
+                const index = shows.findIndex(s => s.id === show.id);
+                if (index > -1) {
+                    shows.splice(index, 1);
+                    this.storage.set(STORAGE_KEY, shows);
+                }
+            });
     }
 }
 

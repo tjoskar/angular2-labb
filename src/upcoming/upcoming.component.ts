@@ -1,20 +1,18 @@
 import {Component} from 'angular2/core';
 import {SubscribeService} from '../lib/providers';
 import {ShowComponent} from './show.component';
+import {Show} from '../lib/interfaces/show';
 
 @Component({
     selector: 'upcoming-shows',
     template: `
         <h1>Upcoming shows</h1>
-        <show *ngFor="#show of shows" [show]="show"></show>
-        <div class="alert alert-warning" [hidden]="shows.length > 0">
-            You don't follow any shows
-        </div>
+        <show *ngFor="#show of shows | async" [show]="show"></show>
     `,
     directives: [ShowComponent]
 })
 class UpcomingShows {
-    shows = [];
+    shows: Promise<Show[]>;
 
     constructor(service: SubscribeService) {
         this.shows = service.getAllSubscribeShows();

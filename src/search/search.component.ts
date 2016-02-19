@@ -32,7 +32,7 @@ class SearchComponent {
 
     onSubscribeShow(show) {
         this.service.subscribeShow(show.id)
-            .subscribe(() => this.router.navigate(['UpcomingShows']));
+            .then(() => this.router.navigate(['UpcomingShows']));
     }
 
     bindSearchEvent() {
