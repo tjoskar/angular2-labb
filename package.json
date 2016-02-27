@@ -12,12 +12,12 @@
     "e2e:debug": "protractor --elementExplorer"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.3",
+    "angular2": "2.0.0-beta.7",
     "bootstrap": "^4.0.0-alpha.2",
-    "es6-shim": "0.34.2",
-    "reflect-metadata": "0.1.3",
-    "rxjs": "5.0.0-beta.1",
-    "zone.js": "0.5.10"
+    "es6-shim": "0.33.11",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "zone.js": "0.5.15"
   },
   "devDependencies": {
     "css-loader": "^0.23.1",
