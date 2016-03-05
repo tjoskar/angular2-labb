@@ -1,8 +1,8 @@
-import {StorageInterface} from './storage-interface';
+import { Storage } from './contracts/storage';
 
 const PREFIX = 'valtech_';
 
-class LocalStorage<T> implements StorageInterface<T> {
+class LocalStorage<T> implements Storage<T> {
 
     get(key: string): Promise<T | void> {
         const data = localStorage.getItem(PREFIX + key);
@@ -36,4 +36,4 @@ class LocalStorage<T> implements StorageInterface<T> {
 }
 
 export default LocalStorage;
-export {LocalStorage};
+export { LocalStorage };

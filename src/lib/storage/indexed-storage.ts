@@ -1,6 +1,6 @@
-import {StorageInterface} from './storage-interface';
+import { Storage } from './contracts/storage';
 
-class IndexedStorage<T> implements StorageInterface<T> {
+class IndexedStorage<T> implements Storage<T> {
     _db = null;
     dbName;
     dbVerson;
@@ -90,4 +90,4 @@ class IndexedStorage<T> implements StorageInterface<T> {
 }
 
 export default IndexedStorage;
-export {IndexedStorage};
+export { IndexedStorage };

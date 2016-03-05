@@ -1,8 +1,8 @@
-import {Component, EventEmitter} from 'angular2/core';
-import {Router} from 'angular2/router';
-import {SearchInputComponent} from './search-input';
-import {SearchResult} from './search-result';
-import {TVMaze, SubscribeService} from '../lib/providers';
+import { Component, EventEmitter } from 'angular2/core';
+import { Router } from 'angular2/router';
+import { SearchInputComponent } from './search-input';
+import { SearchResult } from './search-result';
+import { TVMaze, SubscribeService } from '../lib/providers';
 
 @Component({
     selector: 'search-show',
@@ -45,4 +45,4 @@ class SearchComponent {
 }
 
 export default SearchComponent;
-export {SearchComponent};
+export { SearchComponent };

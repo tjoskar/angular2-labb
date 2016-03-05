@@ -1,4 +1,4 @@
-import {Pipe} from 'angular2/core';
+import { Pipe } from 'angular2/core';
 
 @Pipe({
     name: 'dateString'
@@ -6,8 +6,8 @@ import {Pipe} from 'angular2/core';
 class DateStringPipe {
 
     transform(dateString: string, args: string[]) {
-        const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec(dateString) || [,,,,];
-        switch(args[0]) {
+        const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec(dateString) || [, , , , ];
+        switch (args[0]) {
             case 'year':
                 return year;
             case 'month':
@@ -15,11 +15,11 @@ class DateStringPipe {
             case 'day':
                 return day;
             default:
-                return ''
+                return '';
         }
     }
 
 }
 
 export default DateStringPipe;
-export {DateStringPipe};
+export { DateStringPipe };

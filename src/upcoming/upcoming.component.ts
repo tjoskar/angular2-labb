@@ -1,7 +1,7 @@
-import {Component} from 'angular2/core';
-import {SubscribeService} from '../lib/providers';
-import {ShowComponent} from './show.component';
-import {Show} from '../lib/interfaces/show';
+import { Component } from 'angular2/core';
+import { SubscribeService } from '../lib/providers';
+import { ShowComponent } from './show.component';
+import { Show } from '../lib/contracts/show';
 
 @Component({
     selector: 'upcoming-shows',
@@ -21,4 +21,4 @@ class UpcomingShows {
 }
 
 export default UpcomingShows;
-export {UpcomingShows};
+export { UpcomingShows };

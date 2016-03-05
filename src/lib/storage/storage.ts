@@ -1,6 +1,6 @@
-import {StorageInterface} from './storage-interface';
+import { Storage as IStorage } from './contracts/storage';
 
-class Storage<T> implements StorageInterface<T> {
+class Storage<T> implements IStorage<T> {
 
     constructor() {
         throw new Error('Cannot create an instance of the abstract class Storage');
@@ -21,4 +21,4 @@ class Storage<T> implements StorageInterface<T> {
 }
 
 export default Storage;
-export {Storage};
+export { Storage };

@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from 'angular2/core';
+import { Component, Output, EventEmitter } from 'angular2/core';
 
 @Component({
     selector: 'search-input',
@@ -22,4 +22,4 @@ class SearchInputComponent {
 }
 
 export default SearchInputComponent;
-export {SearchInputComponent};
+export { SearchInputComponent };

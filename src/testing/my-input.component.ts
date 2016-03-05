@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import { Component } from 'angular2/core';
 
 @Component({
     selector: 'my-input',
@@ -21,4 +21,4 @@ class MyInputComponent {
 }
 
 export default MyInputComponent;
-export {MyInputComponent};
+export { MyInputComponent };

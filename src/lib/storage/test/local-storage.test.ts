@@ -1,5 +1,5 @@
-import {it, describe, expect, beforeEach} from 'angular2/testing';
-import {LocalStorage} from '../local-storage';
+import { it, describe, expect, beforeEach } from 'angular2/testing';
+import { LocalStorage } from '../local-storage';
 
 describe('Local Storage: ', () => {
     let _storage: LocalStorage<any>;

@@ -1,7 +1,7 @@
-import {Injectable} from 'angular2/core';
-import {Show} from './interfaces/show';
-import {Storage} from './storage/storage';
-import {TVMaze} from './tv-maze';
+import { Injectable } from 'angular2/core';
+import { Show } from './contracts/show';
+import { Storage } from './storage/storage';
+import { TVMaze } from './tv-maze';
 
 const STORAGE_KEY = 'subscribed-shows';
 
@@ -49,5 +49,5 @@ class SubscribeService {
     }
 }
 
-export {SubscribeService};
+export { SubscribeService };
 export default SubscribeService;

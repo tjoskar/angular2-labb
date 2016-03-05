@@ -15,5 +15,5 @@ interface Episode {
     summary: string;
 }
 
-export {Episode};
+export { Episode };
 export default Episode;

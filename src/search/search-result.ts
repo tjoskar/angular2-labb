@@ -1,5 +1,5 @@
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
-import {DateStringPipe} from './date-string.pipe';
+import { Component, Input, Output, EventEmitter } from 'angular2/core';
+import { DateStringPipe } from './date-string.pipe';
 
 @Component({
     selector: 'search-result',
@@ -18,7 +18,7 @@ import {DateStringPipe} from './date-string.pipe';
     pipes: [DateStringPipe]
 })
 class SearchResult {
-    @Input('resultStream') searchResultStream = [];
+    @Input('resultStream') searchResultStream;
     @Output() subscribe = new EventEmitter();
 
     onSubscribe(show) {
@@ -27,4 +27,4 @@ class SearchResult {
 }
 
 export default SearchResult;
-export {SearchResult};
+export { SearchResult };

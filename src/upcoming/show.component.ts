@@ -1,6 +1,6 @@
-import {Component, Input, ChangeDetectionStrategy} from 'angular2/core';
-import {NextEpisodePipe} from './next-episode.pipe';
-import {LazyLoadImageDirective} from '../directive/lazy-load-image.directive';
+import { Component, Input, ChangeDetectionStrategy } from 'angular2/core';
+import { NextEpisodePipe } from './next-episode.pipe';
+import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,4 +32,4 @@ class ShowComponent {
 }
 
 export default ShowComponent;
-export {ShowComponent};
+export { ShowComponent };

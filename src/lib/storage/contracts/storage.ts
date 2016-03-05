@@ -1,8 +1,8 @@
-interface StorageInterface<T> {
+interface Storage<T> {
     get(key: string): Promise<T | void>;
     set(key: string, value: T): Promise<any>;
     remove(key: string): Promise<any>;
 }
 
-export default StorageInterface;
-export {StorageInterface};
+export default Storage;
+export { Storage };

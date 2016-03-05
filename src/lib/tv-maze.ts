@@ -1,7 +1,7 @@
-import {Injectable} from 'angular2/core';
-import {Http} from 'angular2/http';
-import {Observable} from 'rxjs/Observable';
-import {Show} from './interfaces/show';
+import { Injectable } from 'angular2/core';
+import { Http } from 'angular2/http';
+import { Observable } from 'rxjs/Observable';
+import { Show } from './contracts/show';
 
 const BASE_URL = 'http://api.tvmaze.com/';
 
@@ -36,5 +36,5 @@ class TVMaze {
 
 }
 
-export {TVMaze};
+export { TVMaze };
 export default TVMaze;

@@ -1,17 +1,17 @@
-import {provide} from 'angular2/core';
-import {Http, BaseRequestOptions, Response, ResponseOptions} from 'angular2/http';
-import {it, describe, expect, beforeEach, beforeEachProviders, injectAsync} from 'angular2/testing';
-import {MockBackend} from 'angular2/http/testing';
-import {spy} from 'simple-spy';
-import {SubscribeService} from '../subscribe.service';
-import {TVMaze} from '../tv-maze';
-import {Storage} from '../storage/storage';
+import { provide } from 'angular2/core';
+import { Http, BaseRequestOptions, Response, ResponseOptions } from 'angular2/http';
+import { it, describe, expect, beforeEach, beforeEachProviders, injectAsync } from 'angular2/testing';
+import { MockBackend } from 'angular2/http/testing';
+import { spy } from 'simple-spy';
+import { SubscribeService } from '../subscribe.service';
+import { TVMaze } from '../tv-maze';
+import { Storage } from '../storage/storage';
 
-const storage = {
+const storageMock = {
     data: undefined,
-    get: spy(() => Promise.resolve(storage.data)),
+    get: spy(() => Promise.resolve(storageMock.data)),
     set: spy((key, data) => {
-        storage.data = data;
+        storageMock.data = data;
         return Promise.resolve();
     })
 };
@@ -29,27 +29,27 @@ describe('Subscribe service', () => {
             }
         }),
         TVMaze,
-        provide(Storage, {useValue: storage}),
+        provide(Storage, {useValue: storageMock}),
         SubscribeService
     ]);
 
     beforeEach(() => {
-        storage.data = undefined;
-        storage.get.reset();
-        storage.set.reset();
+        storageMock.data = undefined;
+        storageMock.get.reset();
+        storageMock.set.reset();
     });
 
     it('should be able to get all subscribe shows', injectAsync([SubscribeService], (service: SubscribeService) => {
         // Arrange
         const shows = [1, 2, 3];
-        storage.data = shows;
+        storageMock.data = shows;
 
         // Act
         return service.getAllSubscribeShows()
             .then(subscribeShows => {
                 expect(subscribeShows).toEqual(shows);
-                expect(storage.get.callCount).toEqual(1);
-                expect(storage.set.callCount).toEqual(0);
+                expect(storageMock.get.callCount).toEqual(1);
+                expect(storageMock.set.callCount).toEqual(0);
             });
     }));
 
@@ -67,8 +67,8 @@ describe('Subscribe service', () => {
 
         // Act and assert
         return service.subscribeShow(5).then(() => {
-            expect(storage.data[0].name).toEqual('Dexter');
-            expect(storage.data[0].episodes).toBeAnInstanceOf(Array);
+            expect(storageMock.data[0].name).toEqual('Dexter');
+            expect(storageMock.data[0].episodes).toBeAnInstanceOf(Array);
         });
     }));
 
@@ -83,20 +83,20 @@ describe('Subscribe service', () => {
         });
         const responseOptions = new ResponseOptions({body: response});
         backend.connections.subscribe(c => c.mockRespond(new Response(responseOptions)));
-        storage.data = [1];
+        storageMock.data = [1];
 
         // Act and assert
         return service.subscribeShow(5)
             .then(() => {
-                expect(storage.data[0]).toEqual(1);
-                expect(storage.data[1].name).toEqual('Dexter');
-                expect(storage.data[1].episodes).toBeAnInstanceOf(Array);
+                expect(storageMock.data[0]).toEqual(1);
+                expect(storageMock.data[1].name).toEqual('Dexter');
+                expect(storageMock.data[1].episodes).toBeAnInstanceOf(Array);
             });
     }));
 
     it('should unsubscribe show', injectAsync([SubscribeService], (service: SubscribeService) => {
         // Arrange
-        storage.data = [{
+        storageMock.data = [{
             id: 5,
             name: 'Dexter',
         }, {
@@ -106,8 +106,8 @@ describe('Subscribe service', () => {
 
         // Act
         return service.unSubscribeShow(<any>{id: 5}).then(() => {
-            expect(storage.data.length).toEqual(1);
-            expect(storage.data[0].name).toEqual('Lost');
+            expect(storageMock.data.length).toEqual(1);
+            expect(storageMock.data[0].name).toEqual('Lost');
         });
     }));
 

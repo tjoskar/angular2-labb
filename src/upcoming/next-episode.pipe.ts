@@ -1,5 +1,5 @@
-import {Pipe} from 'angular2/core';
-import {Episode} from '../lib/interfaces/episode';
+import { Pipe } from 'angular2/core';
+import { Episode } from '../lib/contracts/episode';
 
 @Pipe({
     name: 'nextEpisode'
@@ -26,4 +26,4 @@ class NextEpisodePipe {
 }
 
 export default NextEpisodePipe;
-export {NextEpisodePipe};
+export { NextEpisodePipe };

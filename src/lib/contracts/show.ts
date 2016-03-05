@@ -1,4 +1,4 @@
-import {Episode} from './episode';
+import { Episode } from './episode';
 
 interface Show {
     id: number;
@@ -46,5 +46,5 @@ interface Show {
     };
 }
 
-export {Show};
+export { Show };
 export default Show;
