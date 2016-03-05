@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --progress",
-    "build": "webpack --progress --optimize-minimize",
+    "build": "webpack --config webpack.prod.config.js --progress --display-error-details",
     "test": "karma start",
     "e2e": "protractor",
     "e2e:debug": "protractor --elementExplorer"
