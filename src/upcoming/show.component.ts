@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from 'angular2/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 'angular2/core';
 import { NextEpisodePipe } from './next-episode.pipe';
 import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
 
@@ -22,6 +22,7 @@ import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
             <h3>{{show.name}}</h3>
             <p>Next episode: {{ show.episodes | nextEpisode }}</p>
             <div [innerHTML]="show.summary"></div>
+            <button type="button" class="btn btn-danger" (click)="onUnsubscribe()">Unsubscribe</button>
         </div>
     `,
     pipes: [NextEpisodePipe],
@@ -29,6 +30,11 @@ import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
 })
 class ShowComponent {
     @Input() show;
+    @Output() unsubscribe = new EventEmitter();
+
+    onUnsubscribe() {
+        this.unsubscribe.emit(this.show);
+    }
 }
 
 export default ShowComponent;
