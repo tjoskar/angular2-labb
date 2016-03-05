@@ -12,6 +12,8 @@
   },
   "compileOnSave": false,
   "exclude": [
+    "e2e",
+    "presentation",
     "node_modules",
     "typings/browser.d.ts",
     "typings/browser"
