@@ -1,8 +1,7 @@
-require('es6-shim');
 const webpack = require('webpack');
 
 module.exports = {
-    devtool: 'source-map',
+    devtool: 'cheap-module-eval-source-map',
 
     entry: {
         app: './src/boot.ts',
