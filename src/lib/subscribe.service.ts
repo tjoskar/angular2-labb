@@ -29,8 +29,10 @@ class SubscribeService {
 
         return Promise.all<any>([fetchShow, fetchSubscribedShows])
             .then(([show, shows]) => {
-                shows.push(show);
-                return this.storage.set(STORAGE_KEY, shows);
+                if (!shows.find(s => s.id === show.id)) {
+                    shows.push(show);
+                    return this.storage.set(STORAGE_KEY, shows);
+                }
             });
     }
 
