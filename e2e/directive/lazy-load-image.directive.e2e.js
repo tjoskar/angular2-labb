@@ -2,14 +2,16 @@ const GameOfThrones = require('../data/show').GameOfThrones
 const shows = JSON.stringify(Array.from({length: 10}, () => GameOfThrones));
 
 const slowScroll = () => {
-    let c = Math.floor((document.body.scrollHeight - 1024) / 50);
-    const t = setInterval(() => {
-        if (c <= 0) {
-            clearInterval(t)
+    'use strict';
+    const scrollPrecision = 50;
+    let scrollCounter = Math.floor(document.body.scrollHeight / scrollPrecision);
+    const intervalIndex = setInterval(() => {
+        if (scrollCounter <= 0) {
+            clearInterval(intervalIndex)
         };
 
-        window.scrollBy(0, 50);
-        c = c - 1;
+        window.scrollBy(0, scrollPrecision);
+        scrollCounter = scrollCounter - 1;
     }, 100);
 };
 
@@ -27,15 +29,22 @@ describe('Lazy load images', () => {
         const emptyImages = by.css('img[src="https://www.placecage.com/210/295"]');
         const gotImages = by.css('img[src="http://tvmazecdn.com/uploads/images/medium_portrait/0/581.jpg"]');
 
+        browser.wait(() => {
+            const deferred = protractor.promise.defer();
+            setTimeout(() => deferred.fulfill(true), 1000);
+            return deferred.promise;
+        });
+
         // Assert
         expect(element.all(emptyImages).count()).toEqual(5);
         expect(element.all(gotImages).count()).toEqual(5);
 
         browser.executeScript(slowScroll);
 
+        // If you have a better solution, please let me know
         browser.wait(() => {
             const deferred = protractor.promise.defer();
-            setTimeout(() => deferred.fulfill(true), 5000);
+            setTimeout(() => deferred.fulfill(true), 7000);
             return deferred.promise;
         });
 
