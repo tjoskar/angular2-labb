@@ -8,7 +8,7 @@ import {IndexedStorage} from './storage/indexed-storage';
 const providers = [
     TVMaze,
     SubscribeService,
-    provide(Storage, {useClass: IndexedStorage})
+    provide(Storage, {useClass: LocalStorage})
 ];
 
 export {TVMaze, SubscribeService, LocalStorage, IndexedStorage, Storage, providers};
