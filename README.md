@@ -34,6 +34,26 @@ Looking good? - Yes?
 #### You must choose, but choose wisely:
 Just kidding, you can change whenever you like.
 
+#### Atom (My favorite)
+https://atom.io/
+
+Install `atom-typescript` addon:
+```
+$ apm install atom-typescript
+```
+
+Or install the add-on through the settings page: `cmd+,` (or `ctr+,` on windows/linux)
+
+pros:
+- Extremely easy to customize! If you want to change something, just do it!
+- Good integration with git (annotate changes in tree- and file view)
+- Massive collection of add-ons
+
+cons:
+- Slow at startup and can get slow for large files (it will literally die for files >2mb)
+- `atom-typescript` can have a bad day and are not always 100% stable
+
+
 #### Visual studio code
 https://code.visualstudio.com/
 
@@ -46,25 +66,6 @@ cons:
 - Few add-ons
 - Can only change color theme (not ui theme)
 - No tabs? - Can get confusing
-
-#### Atom (My current favorite)
-https://atom.io/
-
-Install `atom-typescript` addon:
-```
-$ apm install atom-typescript
-```
-
-Or install the add-on through the settings page: `cmd+,` (or `ctr+,` on windows/linux)
-
-pros:
-- Extremely easy to customize! If you want to change something, just do it!
-- Good integration with git (anotate changes in tree- and file view)
-- Massive collection of add-ons
-
-cons:
-- Slow at startup and can get slow for large files (it will literally die for files >2mb)
-- `atom-typescript` can have a bad day and are not always 100% stable
 
 
 #### Sublime Text 3
@@ -98,7 +99,11 @@ pros:
 - It's cool
 
 cons:
-- You have to know vim
+- [You have to know vim](https://twitter.com/filip_woj/status/588815049063591937)
+
+### Examine the Final Product
+
+Head over [here](http://tjoskar.github.io/angular2-labb/) and play around with the final project. Think about how you would separate your different components and functionality.
 
 
 ## Chapter 1 - Feel the flow
@@ -114,7 +119,58 @@ http://plnkr.co/edit/A3LfxRup9LUzs6EoOzP4?p=preview
 (N.B: You won't get any typeahead)
 
 ### Examples of things to do:
-#### Play around with local view-variables:
+
+* Display what you type:
+
+![](presentation/img/chapter1-io.gif)
+
+* Display after click
+
+![](presentation/img/chapter1-click.gif)
+
+* Create a new component that you use in an other component, like this:
+
+```javascript
+import { Component, Input, Output, EventEmitter } from 'angular2/core';
+
+@Component({
+    selector: 'city-dropdown',
+    template: `
+        <select>
+            <option value=""></option>
+            <option value="Ankarsrum">Ankarsrum</option>
+            <option value="Västervik">Västervik</option>
+            <option value="Stockholm">Stockholm</option>
+        </select>
+    `
+})
+class CityComponent {
+    @Input() city;
+    @Output() cityChange = new EventEmitter();
+}
+
+@Component({
+    selector: 'my-input',
+    template: `
+        <input [(ngModel)]="username">
+        <city-dropdown></city-dropdown>
+        <br />
+        Username: {{username}}
+        <br />
+        City: {{city}}
+    `,
+    directives: [CityComponent]
+})
+class MyInputComponent {
+    username = 'Jesse';
+    city = '';
+}
+```
+
+– Now, try to bind the value of the drop-down to `city` inside `MyInputComponent`.
+
+* Play around with local view-variables:
+
 ```html
 <button (click)="undefined">Click me</button> <!-- Why do you think we need this? -->
 <input #myInput>
@@ -127,19 +183,12 @@ Or maybe:
 <input #myInput>
 ```
 
-Or try out `[(ngModel)]="username"`.
-
-#### Try `*ngFor`.
-
-```html
-<div *ngFor="#i of numbers">{{i}}</div>
-```
+* Print all values in an array, eg. [1, 2, 3, 4, 5] with `*ngFor`
 
 ```javascript
 @Component({...})
 class MyInputComponent {
-    numbers = [1, 2, 3];
-    ...
+    numbers = [1, 2, 3, 4, 5];
 }
 ```
 
@@ -156,12 +205,13 @@ de-sugars it into:
 ```
 
 which de-sugars into:
-
 ```html
 <template ngFor [ngForOf]="shows" #show="$implicit">
     <my-comp [show]="show"></my-comp>
 </template>
 ```
+
+You can find solutions here: https://gist.github.com/tjoskar/71e0dce55e75e90db971
 
 ## Chapter 2 - Finding Nemo
 
@@ -170,13 +220,17 @@ Create a new component, a search component, with the following criteria:
 - The search component should give results in real time (when you type).
 - The user should be able to subscribe to a chosen show.
 
+![](presentation/img/chapter2.gif)
+
+I have included some skeleton code inside the `search` folder. If you want to start from scratch, just delete the folder.
+
 **_Good to know_**
 
 `lib/tv-maze.ts`
 ```javascript
 searchShow('game of thrones')
 	.subscribe(
-		showsResult => console.log(showsResult) // this will print an array of shows
+		showsResult => console.log(showsResult) // this will print an array of shows (search result)
 		error => console.log(':(', error)
 	);
 ```
@@ -186,58 +240,39 @@ searchShow('game of thrones')
 const showId = 1;
 subscribeShow(showId)
 	.subscribe(
-		() => console.log('We do now subscribe on show with id = 1'),
+		() => console.log('We do now subscribe to show with id = 1'),
 		error => console.log(':(', error)
 	)
 ```
 
-Example markup to use:
-
-```html
-<!-- Search input -->
-<form>
-    <div class="input-group">
-        <input type="search" class="form-control">
-        <span class="input-group-btn">
-            <button class="btn btn-primary">Search</button>
-        </span>
-    </div>
-</form>
-```
-
-```html
-<!-- Search result -->
-<figure class="figure">
-    <img src="show-image.jpg" alt="Show name" class="figure-img img-fluid img-rounded" />
-    <figcaption class="figure-caption">Show name (year of show.premiered)</figcaption>
-</figure>
-```
-
-– Have no idea where to start? Take a look at this skeleton code: https://gist.github.com/tjoskar/3e568131a90b67422a8e (don't copy without understanding, instead ask a friend. I'm your friend)
-
-**_Remember!_**
-Update the routing in `app.component.ts`and `base-template.html`.
+Proposed solution exist under the branch `solution/2`
 
 ## Chapter 3 - Make it count
 
-Create a component to show all subscribe shows. Call it `UpcomingShows`.
+Create a component to list all subscribe series. Call it `UpcomingShows`.
 
 Challenge:
 - Create a pipe to filter out the next episode to air.
 - Create a directive for lazy load images (This can be tricky. – proposed solution exist)
 - Fetch and update the show info in local storage (I don't have any solution for this but it should be fairly easy).
-- The user should be able to unsubscribe to a show (I don't have any solution for this but it should be fairly easy).
+- The user should be able to unsubscribe to a show.
 - The user should be able to view all episodes for a show (I don't have any solution for this but it should be fairly easy).
 
-Skeleton code (if you want): https://gist.github.com/tjoskar/9402044f45dc7d2ecbb0
+![](presentation/img/chapter3.gif)
+
+Example layout:
+
+![](presentation/img/chapter3.png)
+
+– Have no idea where to start? Take a look at this skeleton code: https://gist.github.com/tjoskar/9402044f45dc7d2ecbb0 (don't copy without understanding, instead ask a friend. I'm your friend)
 
 **_Remember!_**
-Update the routing in `app.component.ts`and `base-template.html`.
+Update the routing in `app.component.ts` and `base-template.html`.
 
 ## Chapter 4 - Test me
 
 Writing and executing test cases for front-end are hard. But nevertheless important.
-(almost) All browsers vendors implement the same features in different ways, they have different bugs, you do not control the upgrade cycle. - You are not in control over your own code.
+All browsers vendors implement the same features in different ways, they have different bugs, you do not control the upgrade cycle. - You are not in control over your own code.
 
 Furthermore; Different devices have different input methods (mouse, keyboard, touch) and different outputs to consider (desktop, laptop, tablet, mobile, retina display, screenreader), and the end user can adapt the output (enlarging text, changing the color settings, etc.).
 
@@ -249,30 +284,48 @@ So you need tests, that's for sure.
 To be able to run the same test case in different browsers, we need a test-runner and not any test runner. We need a test runner that can start up and communicated with different browsers.
 We have two options: [Testem](https://github.com/testem/testem) and [Karma](http://karma-runner.github.io/). We will go with Karma for now.
 
-We will also need to choose a test-framework (you wouldn't get far with `console.assert`). I would have chosen [AVA](https://github.com/sindresorhus/ava) or maybe [mocha](https://mochajs.org/) but unfortunately the Angular team have already made the choice for us, [Jasmine](http://jasmine.github.io/2.4/introduction.html), so lets go with the flow.
+We will also need to choose a test-framework (you wouldn't get far with `console.assert`). Unfortunately the Angular team has already made the choice for us, [Jasmine](http://jasmine.github.io/2.4/introduction.html), so lets go with the flow.
 
 First we need to install a few new dependencies (they should already be listed in you `package.json`):
 ```
-jasmine-core@2.4.1               // Core lib for jasmine
-karma-jasmine@0.3.7              // So Karma understand jasmine
-karma-mocha-reporter@1.1.5       // A better test reporter
-karma-phantomjs-launcher@1.0.0   // So Karma can start PhantomJS
-karma-sourcemap-loader@0.3.7     // So Karma understands sourcemaps
-karma-webpack@1.7.0              // So Karma and webpack can talk to each other
-phantomjs-polyfill@0.0.1         // PhantomJS is old
-phantomjs-prebuilt@2.1.4         // PhantomJS, itself
-source-map-loader@0.1.5          // So webpack understand sourcemaps
+jasmine-core               // Core lib for jasmine
+karma-jasmine              // So Karma understand jasmine
+karma-mocha-reporter       // A better test reporter
+karma-phantomjs-launcher   // So Karma can start PhantomJS
+karma-sourcemap-loader     // So Karma understands sourcemaps
+karma-webpack              // So Karma and webpack can talk to each other
+phantomjs-polyfill         // PhantomJS is old
+phantomjs-prebuilt         // PhantomJS, itself
+source-map-loader          // So webpack understand sourcemaps
 ```
 
 Since we are using typescript and `modules`, we need some way of bind all this modules so the browser can understand them, that is why we are using webpack. - Which is awesome but this require some extra work before we can run the test case.
 
 Take a look inside `karma.conf.js`. Karma, will only load one javascript-file (`test.bundle.js`) and pass it to webpack. This file will however load all test files.
-Take a look inside `test.bundle.js`. First of all we load some `polyfills`, angular stuff and similar. But then we use the the context method on `require` that webpack created in order to tell webpack what files we actually want to require or import. For each test-file we find we will call the context function that will require the file and load it up. Cool right?
+Take a look inside `test.bundle.js`. First of all we load some `polyfills` and angular stuff but then we use the the context method on `require` that webpack created in order to tell webpack what files we actually want to require or import. For each test-file we find we will call the context function that will require the file and load it up. Cool right?
 
 Now when you have a basic idea of front end testing works. Lets get started.
 
 Take first a look at: `lib/storage/test/local-storage.test.ts`. Looks straightforward right?
 Now take a look at `lib/test/subscribe.service.test.ts` for a more complex test case.
+
+To create a new test case you only have to create a new file which the filename ends with `.test.ts`.
+
+```
+$ npm test // This will run all unit tests
+```
+
+### End to end testing
+
+Take a look inside the `e2e`.
+
+You will selenum driver to run the test cases. Just run `$ npm run webdriver:update` to download a selenium driver.
+
+Then you can run the e2e-tests by:
+
+```
+$ npm run e2e
+```
 
 -- Happy testing
 
@@ -282,6 +335,8 @@ Now take a look at `lib/test/subscribe.service.test.ts` for a more complex test 
 
 Play around with different change detection strategies. For instance, use immutable objects and set the `changeDetection` to: `ChangeDetectionStrategy.OnPush`:
 ```javascript
+import { Component, Input, ChangeDetectionStrategy } from 'angular2/core';
+
 @Component({
 	selector: 'my-comp',
 	template: `{{model.id}}, {{model.name}}`,
@@ -299,15 +354,16 @@ class MyComponent {
 ```
 
 Take a look at these blog posts:
-http://victorsavkin.com/post/133936129316/angular-immutability-and-encapsulation
-http://victorsavkin.com/post/110170125256/change-detection-in-angular-2
+- http://victorsavkin.com/post/133936129316/angular-immutability-and-encapsulation
+- http://victorsavkin.com/post/110170125256/change-detection-in-angular-2
+- http://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html
 
 ### View Encapsulation
 
 OMG! Native Shadow DOM!
 
 ```javascript
-import {ViewEncapsulation} from 'angular2/core';
+import { Component, ViewEncapsulation } from 'angular2/core';
 
 @Component({
 	selector: 'yoo-boy',
@@ -324,12 +380,24 @@ class YooBoy {}
 
 
 ## Chapter 6 - Make it fast
-OBS! Proposed solution do not exist.
+
+### Use service worker! OMG Service worker!
+
+Don't have anything to do with Angular but it is super cool so check it out!
+
+Take a look at `src/sw.js` in branch `service-worker`. With that inplace and some other hacks (take a look at `src/index.html`) we can get a load time at about 50 ms! And that is awesome.
+
+We can also (soon) use sw to sync all shows in the background: https://github.com/WICG/BackgroundSync/blob/master/explainer.md#periodic-synchronization-in-design
+
 
 ### Use web workers!
-- We can't use `localstorage` anymore. Create a new storage implementation for `indexedDB`.
+
+OBS! Proposed solution do not exist.
+
+- We can't use `localstorage` anymore. Create a new storage implementation for `indexedDB` (exist is `src/lib/storage`).
 - We can't use `webpack` as we do today since all code that are going to execute in a web-worker must be in a separate file(s).
 - If you succeed, please let me know!
 
-### Use service worker! OMG Service worker!
-- Don't have anything to do with Angular but it is super cool so check it out!
+# Congrats!
+
+You are awesome!
