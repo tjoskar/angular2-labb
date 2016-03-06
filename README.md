@@ -9,7 +9,7 @@ What we will create: http://tjoskar.github.io/angular2-labb/
 - Clone the project:
 
 ```
-$ git clone -b chapter/1 https://github.com/tjoskar/angular2-labb.git
+$ git clone -b chapter/2 https://github.com/tjoskar/angular2-labb.git
 ```
 
 - Install dependencies:
@@ -29,9 +29,9 @@ $ npm start
 
 Looking good? - Yes?
 
-### Set up your text editor:
+### Use a typescript aware editor (if you want to use typescript)
 
-#### You must choose, but choose wisely:
+#### You must choose, but choose wisely
 Just kidding, you can change whenever you like.
 
 #### Atom (My favorite)
@@ -109,26 +109,21 @@ Head over [here](http://tjoskar.github.io/angular2-labb/) and play around with t
 ## Chapter 1 - Feel the flow
 
 1. Start off by navigate to `http://localhost:9000/`.
-1. Open up `testing/my-input.component.ts` in your (new) favorite editor.
+1. Open up `src/hello-world/my-input.component.ts` in your (new) favorite editor.
 1. Play around and get a feeling of how events and data binding works.
 
-**_Pro tip_**
-
-It may be easier to live edit the code in the browser:
-http://plnkr.co/edit/A3LfxRup9LUzs6EoOzP4?p=preview
-(N.B: You won't get any typeahead)
 
 ### Examples of things to do:
 
-* Display what you type:
+##### 1. Display what you type:
 
 ![](presentation/img/chapter1-io.gif)
 
-* Display after click
+##### 2. Display after click
 
 ![](presentation/img/chapter1-click.gif)
 
-* Create a new component that you use in an other component, like this:
+##### 3. Create a new component that you use in an other component, like this:
 
 ```javascript
 import { Component, Input, Output, EventEmitter } from 'angular2/core';
@@ -169,7 +164,7 @@ class MyInputComponent {
 
 – Now, try to bind the value of the drop-down to `city` inside `MyInputComponent`.
 
-* Play around with local view-variables:
+##### 4. Play around with local view-variables:
 
 ```html
 <button (click)="undefined">Click me</button> <!-- Why do you think we need this? -->
@@ -183,7 +178,7 @@ Or maybe:
 <input #myInput>
 ```
 
-* Print all values in an array, eg. [1, 2, 3, 4, 5] with `*ngFor`
+##### 5. Print all values in an array, eg. [1, 2, 3, 4, 5] with `*ngFor`
 
 ```javascript
 @Component({...})
