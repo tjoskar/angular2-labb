@@ -29,6 +29,16 @@ $ npm start
 
 Looking good? - Yes?
 
+#### Other npm comands
+
+comand | action
+--- | ---
+npm run start / npm start | compile and start the application (auto rebuild)
+npm run build | build application for production use
+npm run test / npm test | execute unit tests
+npm run webdriver:update | Update / install webdriver for e2e tests
+npm run e2e | execute e2e tests
+
 ### Use a typescript aware editor (if you want to use typescript)
 
 #### You must choose, but choose wisely
@@ -59,7 +69,7 @@ https://code.visualstudio.com/
 
 pros:
 - Support of typescript out of the box
-- Kickass debugger right inside the editor (javascrip, python, php)
+- Debugger right inside the editor (javascrip, python, php)
 - Fast
 
 cons:
@@ -100,6 +110,48 @@ pros:
 
 cons:
 - [You have to know vim](https://twitter.com/filip_woj/status/588815049063591937)
+
+### Take a look at the code
+
+```
+├── README.md                       // This file
+├── e2e                             // Folder for e2e tests
+├── karma.conf.js                   // Configuration for karma
+├── package.json 
+├── protractor.conf.js              // Configuration for protractor
+├── src                             // All application code goes here
+│   ├── app.component.ts            // The one component that rules them all
+│   ├── base-template.html          // A base template which will be used on all pages
+│   ├── boot.ts                     // Boot file that starts the application
+│   ├── directive                   // Folder for shared directives
+│   ├── hello-world                 // Hello word component, start here!
+│   ├── index.html
+│   ├── lib                         // Folder for shared services
+│   │   ├── contracts               // Contracts of how tv maze API objects look likes
+│   │   │   ├── episode.ts
+│   │   │   └── show.ts
+│   │   ├── providers.ts
+│   │   ├── storage
+│   │   │   ├── contracts
+│   │   │   │   └── storage.ts      // Interface of the storage database
+│   │   │   ├── indexed-storage.ts  // IndexedDB implementation
+│   │   │   ├── local-storage.ts    // Local storage implementation
+│   │   │   ├── storage.ts          // Abstract class of storage
+│   │   │   └── test                // Folder for test cases for storage
+│   │   ├── subscribe.service.ts    // Service for subscribing and unsubscribing series
+│   │   ├── test                    // Folder for test cases
+│   │   └── tv-maze.ts              // Service that create http requests to tv maze
+│   ├── search                      // See "Chapter 2"
+│   ├── style.css
+│   └── upcoming                    // See "Chapter 3"
+├── test.bundle.js                  // Endpoint for all unit test case
+├── tsconfig.json                   // Typescript configuration
+├── tslint.json                     // tslint configuration
+├── typings                         // Folder to keep typescript definitions
+├── typings.json
+├── webpack.config.js               // Configuration for webpack
+└── webpack.prod.config.js          // Configuration for webpack - production mode
+```
 
 ### Examine the Final Product
 
