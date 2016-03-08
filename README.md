@@ -361,10 +361,10 @@ Since we are using typescript and `modules`, we need some way of bind all this m
 Take a look inside `karma.conf.js`. Karma, will only load one javascript-file (`test.bundle.js`) and pass it to webpack. This file will however load all test files.
 Take a look inside `test.bundle.js`. First of all we load some `polyfills` and angular stuff but then we use the the context method on `require` that webpack created in order to tell webpack what files we actually want to require or import. For each test-file we find we will call the context function that will require the file and load it up. Cool right?
 
-Now when you have a basic idea of front end testing works. Lets get started.
+Ready to write some unit tests? – [Let's get started](https://youtu.be/IKqV7DB8Iwg?t=59s).
 
 Take first a look at: `lib/storage/test/local-storage.test.ts`. Looks straightforward right?
-Now take a look at `lib/test/subscribe.service.test.ts` for a more complex test case.
+Take a look at `lib/test/subscribe.service.test.ts` for a more complex test case.
 
 To create a new test case you only have to create a new file which the filename ends with `.test.ts`.
 
