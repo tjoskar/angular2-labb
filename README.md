@@ -1,5 +1,8 @@
 # Angular 2 Lab
 
+Before we start. If you see any typos or errors, please let me know.  
+– With that said, let's code some fine javascript.
+
 What we will create: http://tjoskar.github.io/angular2-labb/
 
 ## Prologue - Get started
@@ -38,6 +41,8 @@ npm run build | build application for production use
 npm run test / npm test | execute unit tests
 npm run webdriver:update | Update / install webdriver for e2e tests
 npm run e2e | execute e2e tests
+
+---
 
 ### Use a typescript aware editor (if you want to use typescript)
 
@@ -111,6 +116,8 @@ pros:
 cons:
 - [You have to know vim](https://twitter.com/filip_woj/status/588815049063591937)
 
+---
+
 ### Take a look at the code
 
 ```
@@ -157,6 +164,7 @@ cons:
 
 Head over [here](http://tjoskar.github.io/angular2-labb/) and play around with the final project. Think about how you would separate your different components and functionality.
 
+---
 
 ## Chapter 1 - Feel the flow
 
@@ -259,6 +267,8 @@ which de-sugars into:
 ```
 
 You can find solutions here: https://gist.github.com/tjoskar/71e0dce55e75e90db971
+
+---
 
 ## Chapter 2 - Finding Nemo
 
@@ -371,6 +381,7 @@ You will selenum driver to run the test cases. Just run `$ npm run webdriver:upd
 Then you can run the e2e-tests by:
 
 ```
+$ npm run webdriver:update // You need to run this at least once
 $ npm run e2e
 ```
 
@@ -424,7 +435,6 @@ import { Component, ViewEncapsulation } from 'angular2/core';
 })
 class YooBoy {}
 ```
-
 
 ## Chapter 6 - Make it fast
 
