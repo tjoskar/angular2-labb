@@ -3,33 +3,21 @@ autoscale: true
 
 ![](img/bg.png)
 
-^ Som ni redan vet så kommer huvud fokus av denna presentation och kväll vara tillängnad åt Angular 2 men låt oss först prata lite snabbt om ES6
-
 ---
 
 # [fit] ES6
-
-^ Eller Harmony som det kanske kallas
 
 ---
 
 # [fit] Harmony
 
-^ Eller ECMAScript version 6 om man vill vara tydlig
-
 ---
 
 # [fit] ECMAScript version 6
 
-^ Eller ES2015 som det nu officielt heter
-
 ---
 
 # [fit] ES2015
-
-^ Kärt barn har många namn.
-Internet har fullständigt kokat av upphätsning över ES6 och ES6 är en big deal för javascrip världen.
-Varför? Låt oss bara lite snabbt kolla på tids axlen:
 
 ---
 
@@ -43,12 +31,6 @@ Varför? Låt oss bara lite snabbt kolla på tids axlen:
 - 2015: ES6
 - 2016: ES7
 - 2017: ES8
-
-^ ES2: inga nyheter
-ES3: Regular expressions och try/catch. Man ska komma ihåg att internet var inte så stort 1999, PC hade precis börjat letat sig in i vart och varanat hem
-ES4: Åtta år senare kommer en stort genombrott, vi skulle få classer, ett modul system, statisk typning, iteratorer. Detta skulle bli stort.
-ES5: Vi fick strict mode. Som vi hade väntat!
-Okej, låt oss böja med några få nyhter i ES6. När jag började skriva denna presentation så försökte jag
 
 ---
 
@@ -72,11 +54,6 @@ arr.someRandomProp = 'Jepp Jepp';
 ```javascript
 const add = function(a, b) { return a + b; }
 ```
-
-^ Detta är en av funktionerna som javascript saknade mest.
-javascript är i regel enekl trådat, vilket gör att allt sker asyncront.
-Vilket gör att vi måste ha callbacks
-enkel tråd => async => classback => lamda functioner
 
 ---
 
@@ -139,7 +116,6 @@ arr.forEach(v => console.log(v)); // Cannot read property 'forEach' of undefined
 ---
 
 ## Promises
-^ Min favorit! Har funits länge nu men är entligen med i specifikationen
 
 ---
 
@@ -187,8 +163,6 @@ function findShowById(show) {
 }
 ```
 
-^ Promises kanske inte uppförsig som man alltid vill och de kan vara svårare att debugga.
-
 ---
 
 ## Promises - The bad part
@@ -198,14 +172,10 @@ function findShowById(show) {
 - No retry
 - Single value
 
-^ Ibland kan man vilja skicka runt ett promises object men inte exikvera det förs man vet att det behövs
-Det går inte att avbryta ett promises. XMLHttpRequest
 
 ---
 
 ## Reactive Programming (rxjs)
-
-^ Jag kommer inte hinna gå igenom detta i ditalj men Angular 2 har en tät kopling till just Reactive Programming så jag kommer gå igenom det övergripande
 
 ---
 
@@ -300,9 +270,6 @@ class Heisenberg {
 
 }
 ```
-^ Vad är decorators? Om ni har arbetat med pythons decorators så kommer ni känna er hemma annars så kommer här en snabb genomgång
-Låt oss säga att vi har en enkel klass:
-Låt oss nu säga att vi vill lägga på meta data
 
 ---
 
@@ -325,9 +292,6 @@ class Heisenberg {
 const heisenberg = new Heisenberg();
 heisenberg.canCook // true
 ```
-
-^ Och vad är det som är fantastiskt med detta?
-Detta möjliggör att vi kan lägga på egensaker som kan senare användas. Ex:
 
 ---
 
@@ -368,8 +332,6 @@ class MyClass {
 const myClass = dependencyInjection(MyClass);
 myClass.db.connectionString // 'user:pass@local'
 ```
-
-^Och det stannar så klart inte här utan man kan göra ganska mycket med decorators. I sommras skrev jag en dependncy injector med hjälp av decorators (och typescript):
 
 ---
 
@@ -427,9 +389,6 @@ class MyClass {
 
 ## Typescript
 
-^ Alla vettiga språka har några olika datatyper. Eller hur?
-I javascript har vi 7 olika typer:
-
 ---
 
 ## Typescript
@@ -448,10 +407,11 @@ I javascript har vi 7 olika typer:
 
 - `typeof Array() === 'object'`
 - `typeof ( new Map() ) === 'object'`
+- `typeof class {} === 'function'`
 - `typeof NaN === 'number'`
+- `typeof document.all === 'undefined'`
 - `typeof null === 'object'`
 
-^ Man kan tycka vad man vill om typning men eftersom vi uppenbarlige har olika datatyper så är det ide att annotera metoder.
 
 ---
 
@@ -524,10 +484,6 @@ const obj = {};
 obj.name = 'Mr. White'; // Property 'name' does not exist on type {}.
 ```
 
-^ Vilket är förvisso sant MEN det hindrar mig från att programera javascript. Om ni börjar använda typescript så kommer ni springa på minor. Alla gör det och typescript är inte felfritt
-- Jag tror att jag har rapporterart ett tiotal buggar.
-Vissa är inte återgärdade.
-
 ---
 
 ![](img/rage.gif)
@@ -542,9 +498,6 @@ obj.name = 'Mr. White';
 // Property 'name' does not exist on type {}.
 ```
 
-^ Så det finns problem men det finns också stora fördelar, så pass stroa fördelar som har gjort vänt mig från att vara emot typescript till att använda det i nästa alla mina projekt (både frontend och backend).
-Typescript ska vara ett hjälpmedel. Om det är ivägen. Använd `any` type.
-
 ---
 
 ## Typescript
@@ -553,8 +506,6 @@ Typescript ska vara ett hjälpmedel. Om det är ivägen. Använd `any` type.
 const obj: any = {};
 obj.name = 'Mr. White';
 ```
-
-^ Syntaxen kan vara lite förvirrande i vissa sammanhang men man kommer över det efter ett tag.
 
 ---
 
