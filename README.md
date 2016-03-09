@@ -5,6 +5,8 @@ Before we start. If you see any typos or errors, please let me know.
 
 What we will create: http://tjoskar.github.io/angular2-labb/
 
+> Unfortunately, you can't use https to access tjoskar.github.io/angular2-labb/ due to TVmaze only serve the api over http :/ Sorry for that.
+
 ## Prologue - Get started
 
 ### Set up the project
