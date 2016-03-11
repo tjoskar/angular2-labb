@@ -394,22 +394,23 @@ $ npm run e2e
 ### Change detection strategy
 
 Play around with different change detection strategies. For instance, use immutable objects and set the `changeDetection` to: `ChangeDetectionStrategy.OnPush`:
+
 ```javascript
 import { Component, Input, ChangeDetectionStrategy } from 'angular2/core';
 
 @Component({
-	selector: 'my-comp',
-	template: `{{model.id}}, {{model.name}}`,
-	changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'my-comp',
+    template: `{{myData.id}}, {{myData.name}}`,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 class MyComponent {
-	@Input() model;
+    @Input() myData;
 
-	onChanges(inputChanges) {
-		if (inputChanges.model) { // We have a new model
-			console.log(inputChanges.model);
-		}
-	}
+    ngOnChanges(inputChanges) {
+        if (inputChanges.myData) { // We have a new model
+            console.log(inputChanges.myData.currentValue);
+        }
+    }
 }
 ```
 
