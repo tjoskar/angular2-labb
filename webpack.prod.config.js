@@ -10,7 +10,7 @@ module.exports = {
         vendors: [
             'es6-shim',
             'reflect-metadata',
-            'rxjs', // Agresiv and stupid
+            'rxjs', // Aggressive and stupid
             'zone.js/dist/zone-microtask',
             'zone.js/dist/long-stack-trace-zone',
             'angular2/platform/browser',
