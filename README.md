@@ -289,8 +289,8 @@ I have included some skeleton code inside the `search` folder. If you want to st
 ```javascript
 searchShow('game of thrones')
 	.subscribe(
-		showsResult => console.log(showsResult) // this will print an array of shows (search result)
-		error => console.log(':(', error)
+		showsResult => console.log(showsResult), // this will print an array of shows (search result)
+		error => console.error(':(', error)
 	);
 ```
 
@@ -298,8 +298,8 @@ searchShow('game of thrones')
 ```javascript
 const showId = 1;
 subscribeShow(showId)
-	.then(() => console.log('We do now subscribe to show with id = 1')),
-	.catch(error => error => console.log(':(', error));
+	.then(() => console.log('We do now subscribe to show with id = 1'))
+	.catch(error => console.error(':(', error));
 ```
 
 Proposed solution exist under the branch `solution/2`
