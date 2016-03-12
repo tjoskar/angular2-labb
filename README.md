@@ -298,10 +298,8 @@ searchShow('game of thrones')
 ```javascript
 const showId = 1;
 subscribeShow(showId)
-	.subscribe(
-		() => console.log('We do now subscribe to show with id = 1'),
-		error => console.log(':(', error)
-	)
+	.then(() => console.log('We do now subscribe to show with id = 1')),
+	.catch(error => error => console.log(':(', error));
 ```
 
 Proposed solution exist under the branch `solution/2`
