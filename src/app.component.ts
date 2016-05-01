@@ -7,7 +7,7 @@ import { MyInputComponent } from './hello-world/my-input.component';
 
 @Component({
     selector: 'my-app',
-    templateUrl: './base-template.html',
+    template: require('./base-template.html'),
     directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([
