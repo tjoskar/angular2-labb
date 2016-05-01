@@ -33,6 +33,8 @@ module.exports = {
             // Support for CSS as raw text
             { test: /\.css$/, loader: 'raw-loader' },
 
+            { test: /\.scss$/, loaders: ["style", "css", "sass"] },
+
             // Support for .html as raw text
             { test: /\.html$/,  loader: 'raw-loader', exclude: [ './src/index.html' ] }
         ]

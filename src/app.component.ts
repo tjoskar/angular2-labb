@@ -1,3 +1,4 @@
+import './style/index.scss';
 import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
 import { UpcomingShows } from './upcoming/upcoming.component';
