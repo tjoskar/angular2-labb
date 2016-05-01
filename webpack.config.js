@@ -17,7 +17,7 @@ module.exports = {
     },
 
     output: {
-        path: './src',
+        path: './public',
         filename: '[name].bundle.js',
         sourceMapFilename: '[name].js.map',
         chunkFilename: '[id].chunk.js'
@@ -48,7 +48,7 @@ module.exports = {
         port: 9000,
         host: 'localhost',
         historyApiFallback: true,
-        contentBase: path.resolve(__dirname, 'src'),
+        contentBase: path.resolve(__dirname, 'public'),
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
