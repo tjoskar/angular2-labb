@@ -1,5 +1,5 @@
-import { Component, EventEmitter } from 'angular2/core';
-import { Router } from 'angular2/router';
+import { Component, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router-deprecated';
 import { SearchInputComponent } from './search-input';
 import { SearchResult } from './search-result';
 import { TVMaze, SubscribeService } from '../lib/providers';

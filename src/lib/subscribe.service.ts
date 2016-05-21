@@ -1,4 +1,4 @@
-import { Injectable } from 'angular2/core';
+import { Injectable } from '@angular/core';
 import { Show } from './contracts/show';
 import { Storage } from './storage/storage';
 import { TVMaze } from './tv-maze';

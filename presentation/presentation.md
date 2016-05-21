@@ -553,7 +553,7 @@ show.name  // Property 'name' does not exist on type 'tvShow'.
 
 ```javascript
 // app.component.ts
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'my-app',
@@ -585,7 +585,7 @@ bootstrap(AppComponent);
 #### Data binding
 
 ```javascript
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'my-app',
@@ -604,7 +604,7 @@ export class AppComponent {
 #### Iterator
 
 ```javascript
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'my-app',
@@ -630,7 +630,7 @@ export class AppComponent {
 #### Local DOM variable
 
 ```javascript
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'search',
@@ -649,7 +649,7 @@ export class SearchComponent {}
 #### Events
 
 ```javascript
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'search',
@@ -674,7 +674,7 @@ export class SearchComponent {
 #### Property bindings
 
 ```javascript
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'login',
@@ -756,7 +756,7 @@ class NgModel {
 ---
 
 ```javascript
-import {Component, Input, Output, EventEmitter, Directive} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, Directive} from '@angular/core';
 
 @Component({
     selector: 'quote-generator',
@@ -796,7 +796,7 @@ export class SearchComponent {
 ---
 
 ```javascript
-import {Component, Input, Output, EventEmitter, Directive} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, Directive} from '@angular/core';
 
 @Component({
     selector: 'quote-generator',
@@ -842,7 +842,7 @@ export class SearchComponent {
 ---
 
 ```javascript
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 class QuoteService {
   quote = 'Test data';
@@ -909,7 +909,7 @@ bootstrap(QuoteComponent, [
 ---
 
 ```javascript
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 class QuoteService {
   quote = 'Test data';

@@ -1,65 +1,40 @@
 const webpack = require('webpack');
+const devConfig = require('webpack.config');
 
-module.exports = {
+const ENV = process.env.ENV = process.env.NODE_ENV = 'production';
+const HMR = false;
+
+module.exports = Object.assign({}, devConfig, {
     devtool: 'source-map',
     cache: false,
     debug: false,
 
-    entry: {
-        app: './src/boot.ts',
-        vendors: [
-            'es6-shim',
-            'reflect-metadata',
-            'rxjs', // Aggressive and stupid
-            'zone.js/dist/zone-microtask',
-            'zone.js/dist/long-stack-trace-zone',
-            'angular2/platform/browser',
-            'angular2/core',
-            'angular2/http',
-            'angular2/router'
-        ]
-    },
-    output: {
-        path: './src/',
-        filename: 'one-file-to-rule-them-all.js'
-    },
-    module: {
-        loaders: [{
-            test: /\.ts$/,
-            loader: 'ts',
-            exclude: /node_modules/,
-            query: {
-                compilerOptions: {
-                    removeComments: true,
-                    noEmitHelpers: true,
-                }
-            }
-        }, {
-            test: /\.css$/,
-            loader: 'style!css'
-        }],
-        noParse: [/zone\.js\/dist\/.+/]
-    },
     resolve: {
         cache: false,
         extensions: ['', '.ts', '.js']
     },
+
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js', Infinity),
-        new webpack.optimize.DedupePlugin(),
+        new ForkCheckerPlugin(),
         new webpack.optimize.OccurenceOrderPlugin(true),
-        new webpack.ProvidePlugin({
-            '__metadata': 'ts-helper/metadata',
-            '__decorate': 'ts-helper/decorate',
-            '__awaiter': 'ts-helper/awaiter',
-            '__extends': 'ts-helper/extends',
-            '__param': 'ts-helper/param'
-        }),
+        new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             beautify: false,
-            mangle: false,
-            compress: { screw_ie8 : true },
+            mangle: {
+                screw_ie8 : true,
+                keep_fnames: true
+            },
+            compress: {
+                screw_ie8: true
+            },
             comments: false
+        }),
+        new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
+        new webpack.DefinePlugin({
+            HMR,
+            ENV: JSON.stringify(ENV)
         })
-    ]
-};
+    ],
+
+    devServer: undefined
+});

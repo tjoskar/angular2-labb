@@ -16,6 +16,10 @@ module.exports = {
         'main': './src/boot.ts'
     },
 
+    resolve: {
+        extensions: ['', '.ts', '.js']
+    },
+
     output: {
         path: './public',
         filename: '[name].bundle.js',
@@ -25,7 +29,15 @@ module.exports = {
 
     module: {
         preLoaders: [
-            { test: /\.js$/, loader: 'source-map-loader', exclude: [ path.resolve(__dirname, 'node_modules/rxjs') ] }
+            {
+                test: /\.js$/,
+                loader: 'source-map-loader',
+                exclude: [
+                    // these packages have problems with their sourcemaps
+                    path.resolve(__dirname, 'node_modules/rxjs'),
+                    path.resolve(__dirname, 'node_modules/@angular')
+                ]
+            }
         ],
         loaders: [
             { test: /\.ts$/, loader: 'awesome-typescript-loader' },
@@ -40,21 +52,6 @@ module.exports = {
         ]
     },
 
-    resolve: {
-        extensions: ['', '.ts', '.js']
-    },
-
-    devServer: {
-        port: 9000,
-        host: 'localhost',
-        historyApiFallback: true,
-        contentBase: path.resolve(__dirname, 'public'),
-        watchOptions: {
-            aggregateTimeout: 300,
-            poll: 1000
-        }
-    },
-
     plugins: [
         new ForkCheckerPlugin(),
         new webpack.optimize.OccurenceOrderPlugin(true),
@@ -63,5 +60,17 @@ module.exports = {
             HMR,
             ENV: JSON.stringify(ENV)
         })
-    ]
+    ],
+
+    devServer: {
+        port: 8000,
+        host: 'localhost',
+        historyApiFallback: true,
+        contentBase: path.resolve(__dirname, 'public'),
+        watchOptions: {
+            aggregateTimeout: 300,
+            poll: 1000
+        }
+    }
+
 };

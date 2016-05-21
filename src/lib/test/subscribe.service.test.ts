@@ -1,7 +1,7 @@
-import { provide } from 'angular2/core';
-import { Http, BaseRequestOptions, Response, ResponseOptions } from 'angular2/http';
-import { it, describe, expect, beforeEach, beforeEachProviders, injectAsync } from 'angular2/testing';
-import { MockBackend } from 'angular2/http/testing';
+import { provide } from '@angular/core';
+import { Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
+import { it, describe, expect, beforeEach, beforeEachProviders, injectAsync } from '@angular/core/testing';
+import { MockBackend } from '@angular/http/testing';
 import { spy } from 'simple-spy';
 import { SubscribeService } from '../subscribe.service';
 import { TVMaze } from '../tv-maze';

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 'angular2/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { NextEpisodePipe } from './next-episode.pipe';
 import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
 

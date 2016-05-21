@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 import { SubscribeService } from '../lib/providers';
 import { ShowComponent } from './show.component';
 import { Show } from '../lib/contracts/show';
