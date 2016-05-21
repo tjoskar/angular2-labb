@@ -625,6 +625,7 @@ export class AppComponent {
 }
 ```
 
+
 ---
 #### Local DOM variable
 

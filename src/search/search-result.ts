@@ -10,7 +10,7 @@ import { DateStringPipe } from './date-string.pipe';
         }
     `],
     template: `
-        <figure class="figure" *ngFor="#show of searchResultStream | async" (click)="onSubscribe(show)">
+        <figure class="figure" *ngFor="let show of searchResultStream | async" (click)="onSubscribe(show)">
             <img [src]="show.image?.medium" [alt]="show.name" class="figure-img img-fluid img-rounded" />
             <figcaption class="figure-caption">{{show.name}} ({{ show.premiered | dateString:'year' }})</figcaption>
         </figure>

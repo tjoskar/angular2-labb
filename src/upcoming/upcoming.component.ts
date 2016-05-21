@@ -7,7 +7,7 @@ import { Show } from '../lib/contracts/show';
     selector: 'upcoming-shows',
     template: `
         <h1>Upcoming shows</h1>
-        <show *ngFor="#show of shows" [show]="show" (unsubscribe)=unsubscribeShow($event)></show>
+        <show *ngFor="let show of shows" [show]="show" (unsubscribe)=unsubscribeShow($event)></show>
     `,
     directives: [ShowComponent]
 })
