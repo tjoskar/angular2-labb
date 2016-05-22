@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { NextEpisodePipe } from './next-episode.pipe';
 import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
+import { ReplaceHttpPipe } from '../pipes/replace-http.pipe';
+import { NextEpisodePipe } from './next-episode.pipe';
 
 @Component({
     selector: 'show',
@@ -12,7 +13,7 @@ import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
     template: `
         <img
             src="https://www.placecage.com/210/295"
-            [lazyLoad]="show.image?.medium"
+            [lazyLoad]="show.image?.medium | replaceHttp"
             [alt]="show.name"
             class="img-rounded" />
         <div class="show-information">
@@ -22,7 +23,7 @@ import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
             <button type="button" class="btn btn-danger" (click)="onUnsubscribe()">Unsubscribe</button>
         </div>
     `,
-    pipes: [ NextEpisodePipe ],
+    pipes: [ NextEpisodePipe, ReplaceHttpPipe ],
     directives: [ LazyLoadImageDirective ],
     changeDetection: ChangeDetectionStrategy.Detached
 })
