@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { DateStringPipe } from './date-string.pipe';
 import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
 
@@ -12,7 +12,7 @@ import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
         }
     `],
     template: `
-        <figure class="figure" *ngFor="let show of resultStream | async">
+        <figure class="figure" *ngFor="let show of resultStream | async" (click)="onSubscribe(show)">
             <img
                 src="https://www.placecage.com/210/295"
                 [lazyLoad]="show.image?.medium"
@@ -22,11 +22,16 @@ import { LazyLoadImageDirective } from '../directive/lazy-load-image.directive';
         </figure>
     `,
     pipes: [ DateStringPipe ],
-    directives: [ LazyLoadImageDirective ]
+    directives: [ LazyLoadImageDirective ],
+    changeDetection: ChangeDetectionStrategy.Detached
 })
 class SearchResult {
     @Input() resultStream;
     @Output() subscribe = new EventEmitter();
+
+    onSubscribe(show) {
+        this.subscribe.emit(show);
+    }
 }
 
 export { SearchResult };
