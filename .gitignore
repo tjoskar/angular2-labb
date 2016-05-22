@@ -1,7 +1,0 @@
-node_modules
-typings
-npm-debug.log
-public/*.js
-!public/sw.js
-public/*.map
-public/*.css

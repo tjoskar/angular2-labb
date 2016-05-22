@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" type="text/css" href="./style.css"> <!-- Render blocking :/ -->
+    <title>Angular 2</title>
+</head>
+    <body>
+        <my-app>Woop Woop!</my-app>
+        <script>
+            if ('serviceWorker' in window.navigator) {
+                window.navigator.serviceWorker
+                    .register('/sw.js')
+                    .then(reg => console.log('🦄', reg))
+                    .catch(err => console.log('ಠ_ಠ', err));
+            }
+            var tempView = localStorage.getItem('tempView');
+            if (tempView) {
+                document.getElementsByTagName('my-app')[0].innerHTML = tempView;
+            }
+            window.onunload = function() {
+                localStorage.setItem('tempView', document.getElementsByTagName('my-app')[0].innerHTML);
+            };
+        </script>
+        <script src="/polyfills.bundle.js"></script>
+        <script src="/vendor.bundle.js"></script>
+        <script src="/main.bundle.js"></script>
+    </body>
+</html>
