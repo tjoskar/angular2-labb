@@ -7,7 +7,7 @@
   "scripts": {
     "postinstall": "typings install",
     "start": "webpack-dev-server --inline --progress --profile --colors --watch --display-error-details --display-cached --hot",
-    "build": "webpack --config webpack.prod.config.js --progress --display-error-details",
+    "build": "webpack --config webpack.prod.config.js --progress --display-error-details && node-sass --output-style compressed src/style/index.scss > public/style.css",
     "test": "karma start",
     "webdriver:update": "webdriver-manager update",
     "e2e": "protractor",

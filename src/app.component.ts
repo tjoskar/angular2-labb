@@ -1,4 +1,3 @@
-import './style/index.scss';
 import { Component } from '@angular/core';
 import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { UpcomingShows } from './upcoming/upcoming.component';
