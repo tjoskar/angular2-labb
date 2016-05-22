@@ -1,12 +1,13 @@
-import { Component } from 'angular2/core';
-import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import './style/index.scss';
+import { Component } from '@angular/core';
+import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { UpcomingShows } from './upcoming/upcoming.component';
 import { SearchComponent } from './search/search.component';
 import { MyInputComponent } from './hello-world/my-input.component';
 
 @Component({
     selector: 'my-app',
-    templateUrl: './base-template.html',
+    template: require('./base-template.html'),
     directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([

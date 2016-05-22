@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = function(config) {
     config.set({
         basePath: '',
@@ -6,9 +8,9 @@ module.exports = function(config) {
         files: [
             // Only specify one entry point
             // and require all tests in there
-            { pattern: 'test.bundle.js', watched: false }
+            { pattern: 'unit-test.bundle.js', watched: false }
         ],
-        preprocessors: { 'test.bundle.js': ['webpack', 'sourcemap'] },
+        preprocessors: { 'unit-test.bundle.js': ['webpack', 'sourcemap'] },
 
         webpack: {
             devtool: 'inline-source-map',
@@ -16,15 +18,32 @@ module.exports = function(config) {
                 extensions: ['', '.ts', '.js']
             },
             module: {
-                loaders: [{
-                    test: /\.ts$/,
-                    loader: 'ts',
-                    exclude: /node_modules/
-                }],
+                preLoaders: [
+                    {
+                        test: /\.js$/,
+                        loader: 'source-map-loader',
+                        exclude: [
+                            // these packages have problems with their sourcemaps
+                            path.resolve(__dirname, 'node_modules/rxjs'),
+                            path.resolve(__dirname, 'node_modules/@angular')
+                        ]
+                    }
+                ],
+                loaders: [
+                    { test: /\.ts$/, loader: 'awesome-typescript-loader' },
+
+                    // Support for CSS as raw text
+                    { test: /\.css$/, loader: 'raw-loader' },
+
+                    { test: /\.scss$/, loaders: ["style", "css", "sass"] },
+
+                    // support for .html as raw text
+                    { test: /\.html$/,  loader: 'raw-loader', exclude: [ './src/index.html' ] }
+                ],
                 noParse: [/zone\.js\/dist\/.+/]
             },
-            debug: true,
-            stats: { colors: true, reasons: true, errorDetails: true }
+            debug: false,
+            stats: { colors: true, reasons: false, errorDetails: true }
         },
 
         // Webpack please don't spam the console when running in karma!
@@ -36,12 +55,15 @@ module.exports = function(config) {
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
-        autoWatch: false,
+        autoWatch: true,
         browsers: [
-            // 'Chrome',
-            'PhantomJS'
+            // 'Firefox',
+            'Electron'
         ],
-        singleRun: true
+        electronOpts: {
+            title: 'Yoo boy!'
+        },
+        singleRun: false
     });
 
 };

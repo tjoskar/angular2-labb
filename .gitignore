@@ -1,3 +1,5 @@
 node_modules
 typings
 npm-debug.log
+public/*.js
+public/*.map

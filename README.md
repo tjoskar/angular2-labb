@@ -188,7 +188,7 @@ Head over [here](http://tjoskar.github.io/angular2-labb/) and play around with t
 ##### 3. Create a new component that you use in an other component, like this:
 
 ```javascript
-import { Component, Input, Output, EventEmitter } from 'angular2/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'city-dropdown',
@@ -394,7 +394,7 @@ $ npm run e2e
 Play around with different change detection strategies. For instance, use immutable objects and set the `changeDetection` to: `ChangeDetectionStrategy.OnPush`:
 
 ```javascript
-import { Component, Input, ChangeDetectionStrategy } from 'angular2/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'my-comp',
@@ -422,7 +422,7 @@ Take a look at these blog posts:
 OMG! Native Shadow DOM!
 
 ```javascript
-import { Component, ViewEncapsulation } from 'angular2/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
 	selector: 'yoo-boy',

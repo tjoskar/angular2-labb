@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SubscribeService } from '../lib/providers';
 import { ShowComponent } from './show.component';
 import { Show } from '../lib/contracts/show';
@@ -7,9 +7,10 @@ import { Show } from '../lib/contracts/show';
     selector: 'upcoming-shows',
     template: `
         <h1>Upcoming shows</h1>
-        <show *ngFor="#show of shows" [show]="show" (unsubscribe)=unsubscribeShow($event)></show>
+        <show *ngFor="let show of shows" [show]="show" (unsubscribe)=unsubscribeShow($event)></show>
     `,
-    directives: [ShowComponent]
+    directives: [ ShowComponent ],
+    changeDetection: ChangeDetectionStrategy.Detached
 })
 class UpcomingShows {
     service: SubscribeService;

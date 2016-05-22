@@ -36,8 +36,8 @@ describe('Lazy load images', () => {
         });
 
         // Assert
-        expect(element.all(emptyImages).count()).toEqual(5);
-        expect(element.all(gotImages).count()).toEqual(5);
+        expect(element.all(emptyImages).count()).toEqual(6);
+        expect(element.all(gotImages).count()).toEqual(4);
 
         browser.executeScript(slowScroll);
 

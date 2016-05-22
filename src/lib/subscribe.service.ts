@@ -1,4 +1,4 @@
-import { Injectable } from 'angular2/core';
+import { Injectable } from '@angular/core';
 import { Show } from './contracts/show';
 import { Storage } from './storage/storage';
 import { TVMaze } from './tv-maze';
@@ -42,11 +42,8 @@ class SubscribeService {
                 if (!Array.isArray(shows)) {
                     return;
                 }
-                const index = shows.findIndex(s => s.id === show.id);
-                if (index > -1) {
-                    shows.splice(index, 1);
-                    this.storage.set(STORAGE_KEY, shows);
-                }
+                const newShowList = shows.filter(s => s.id !== show.id);
+                this.storage.set(STORAGE_KEY, newShowList);
             });
     }
 }

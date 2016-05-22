@@ -1,4 +1,4 @@
-import { provide } from 'angular2/core';
+import { provide } from '@angular/core';
 import { TVMaze } from './tv-maze';
 import { SubscribeService } from './subscribe.service';
 import { Storage } from './storage/storage';
