@@ -1,7 +1,6 @@
 import './style/index.scss';
 import { Component } from '@angular/core';
 import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
-import { UpcomingShows } from './upcoming/upcoming.component';
 import { SearchComponent } from './search/search.component';
 import { MyInputComponent } from './hello-world/my-input.component';
 
@@ -11,8 +10,7 @@ import { MyInputComponent } from './hello-world/my-input.component';
     directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([
-    {path: '/', name: 'UpcomingShows', component: UpcomingShows, useAsDefault: true},
-    {path: '/hello-world', name: 'MyInput', component: MyInputComponent},
+    {path: '/hello-world', name: 'MyInput', component: MyInputComponent, useAsDefault: true},
     {path: '/search', name: 'SearchShow', component: SearchComponent}
 ])
 class AppComponent {}

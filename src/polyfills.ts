@@ -1,5 +1,3 @@
-/// <reference path="./custom-typings.d.ts"/>
-
 import 'es6-shim';
 import 'reflect-metadata';
 import 'zone.js/dist/zone';

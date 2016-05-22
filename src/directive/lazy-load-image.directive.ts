@@ -1,5 +1,5 @@
-import {Directive, ElementRef, Input} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Directive, ElementRef, Input } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Directive({
     selector: '[lazyLoad]'
@@ -83,5 +83,5 @@ class LazyLoadImageDirective {
     }
 }
 
-export {LazyLoadImageDirective};
+export { LazyLoadImageDirective };
 export default LazyLoadImageDirective;

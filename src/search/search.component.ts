@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 import { SearchInputComponent } from './search-input.component';
 import { SearchResult } from './search-result.component';
@@ -10,8 +10,7 @@ import { TVMaze, SubscribeService } from '../lib/providers';
         <search-input (searchChange)="onSearch($event)"></search-input>
         <search-result [resultStream]="searchResultStream" (subscribe)="onSubscribeShow($event)"></search-result>
     `,
-    directives: [ SearchInputComponent, SearchResult ],
-    changeDetection: ChangeDetectionStrategy.Detached
+    directives: [ SearchInputComponent, SearchResult ]
 })
 class SearchComponent {
     tvMaze: TVMaze;
@@ -28,7 +27,7 @@ class SearchComponent {
     }
 
     onSearch(term) {
-        this.searchEmitter.emit(term);
+        console.log('We have a new serach string:', term);
     }
 
     onSubscribeShow(show) {
@@ -37,10 +36,18 @@ class SearchComponent {
     }
 
     bindSearchEvent() {
+        // TODO: Fix me
         this.searchResultStream = this.searchEmitter
-            .filter(term => term.length >= 2)
-            .debounceTime(500)
-            .switchMap(term => this.tvMaze.searchShow(term));
+            // .filter - Make a search request if the search string is longer than 2 characters (google for "rxjs filter")
+            // .debounceTime - Wait for more user input before making the request
+            // .switchMap - Create a new stream and merge it into the "base" stream. However, unsubscribe to streams when
+            //      the new stream emits. Take a look at this page: https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/flatmaplatest.md (switchMap was named flatmaplatest in v4, we are using v5).
+            //      http://reactivex.io/documentation/operators/images/switchMap.png
+            //      SPOILER: You will basically use it like this: ".switchMap((term: string) => this.tvMaze.searchShow(term))"
+            .map(searchString => { // TODO: remove me
+                console.log('searchString: ', searchString);
+                return [];
+            });
     }
 
 }
