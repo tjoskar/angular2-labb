@@ -1,6 +1,6 @@
 'use strict';
 
-const fundamentalsCacheName = 'v4::fundamentals';
+const fundamentalsCacheName = 'v1::fundamentals';
 const posterCacheName = 'v1::posters';
 const offlineFundamentals = [
     '/angular2-labb/',
