@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="/">
+    <base href="/angular2-labb/">
     <meta charset="utf-8">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <link rel="stylesheet" type="text/css" href="./style.css"> <!-- Render blocking :/ -->
@@ -12,7 +12,7 @@
         <script>
             if ('serviceWorker' in window.navigator) {
                 window.navigator.serviceWorker
-                    .register('/sw.js')
+                    .register('sw.js')
                     .then(reg => console.log('🦄', reg))
                     .catch(err => console.log('ಠ_ಠ', err));
             }
@@ -24,8 +24,8 @@
                 localStorage.setItem('tempView', document.getElementsByTagName('my-app')[0].innerHTML);
             };
         </script>
-        <script src="/polyfills.bundle.js"></script>
-        <script src="/vendor.bundle.js"></script>
-        <script src="/main.bundle.js"></script>
+        <script src="polyfills.bundle.js"></script>
+        <script src="vendor.bundle.js"></script>
+        <script src="main.bundle.js"></script>
     </body>
 </html>

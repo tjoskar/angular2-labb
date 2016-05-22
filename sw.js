@@ -1,13 +1,13 @@
 'use strict';
 
-const fundamentalsCacheName = 'v3::fundamentals';
+const fundamentalsCacheName = 'v4::fundamentals';
 const posterCacheName = 'v1::posters';
 const offlineFundamentals = [
-    '/',
-    '/polyfills.bundle.js',
-    '/vendor.bundle.js',
-    '/main.bundle.js',
-    '/style.css'
+    '/angular2-labb/',
+    '/angular2-labb/polyfills.bundle.js',
+    '/angular2-labb/vendor.bundle.js',
+    '/angular2-labb/main.bundle.js',
+    '/angular2-labb/style.css'
 ];
 
 self.addEventListener('install', event => {
