@@ -42,11 +42,8 @@ class SubscribeService {
                 if (!Array.isArray(shows)) {
                     return;
                 }
-                const index = shows.findIndex(s => s.id === show.id);
-                if (index > -1) {
-                    shows.splice(index, 1);
-                    this.storage.set(STORAGE_KEY, shows);
-                }
+                const newShowList = shows.filter(s => s.id !== show.id);
+                this.storage.set(STORAGE_KEY, newShowList);
             });
     }
 }

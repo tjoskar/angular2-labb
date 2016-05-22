@@ -1,16 +1,17 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
-import { SearchInputComponent } from './search-input';
-import { SearchResult } from './search-result';
+import { SearchInputComponent } from './search-input.component';
+import { SearchResult } from './search-result.component';
 import { TVMaze, SubscribeService } from '../lib/providers';
 
 @Component({
     selector: 'search-show',
     template: `
-        <search-input (search)="onSearch($event)"></search-input>
+        <search-input (searchChange)="onSearch($event)"></search-input>
         <search-result [resultStream]="searchResultStream" (subscribe)="onSubscribeShow($event)"></search-result>
     `,
-    directives: [SearchInputComponent, SearchResult]
+    directives: [ SearchInputComponent, SearchResult ],
+    changeDetection: ChangeDetectionStrategy.Detached
 })
 class SearchComponent {
     tvMaze: TVMaze;
@@ -39,7 +40,7 @@ class SearchComponent {
         this.searchResultStream = this.searchEmitter
             .filter(term => term.length >= 2)
             .debounceTime(500)
-            .switchMap((term: string) => this.tvMaze.searchShow(term));
+            .switchMap(term => this.tvMaze.searchShow(term));
     }
 
 }

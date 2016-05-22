@@ -5,9 +5,9 @@ import { Pipe } from '@angular/core';
 })
 class DateStringPipe {
 
-    transform(dateString: string, args: string[]) {
+    transform(dateString: string, type: string) {
         const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec(dateString) || [, , , , ];
-        switch (args[0]) {
+        switch (type) {
             case 'year':
                 return year;
             case 'month':

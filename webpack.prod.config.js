@@ -1,5 +1,6 @@
 const webpack = require('webpack');
-const devConfig = require('webpack.config');
+const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+const devConfig = require('./webpack.config');
 
 const ENV = process.env.ENV = process.env.NODE_ENV = 'production';
 const HMR = false;
@@ -29,7 +30,10 @@ module.exports = Object.assign({}, devConfig, {
             },
             comments: false
         }),
-        new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: ['main', 'vendor', 'polyfills'],
+            minChunks: Infinity
+        }),
         new webpack.DefinePlugin({
             HMR,
             ENV: JSON.stringify(ENV)
