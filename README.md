@@ -3,9 +3,7 @@
 Before we start. If you see any typos or errors, please let me know.  
 – With that said, let's code some fine javascript.
 
-What we will create: http://tjoskar.github.io/angular2-labb/
-
-> Unfortunately, you can't use https to access tjoskar.github.io/angular2-labb/ due to TVmaze only serve the api over http :/ Sorry for that.
+What we will create: https://tjoskar.github.io/angular2-labb/
 
 ## Prologue - Get started
 
@@ -30,7 +28,7 @@ $ npm install
 $ npm start
 ```
 
-- Navigate to `http://localhost:9000`
+- Navigate to `http://localhost:8000`
 
 Looking good? - Yes?
 
@@ -106,7 +104,6 @@ pros:
 
 cons:
 - Fully integrated IDE
-- Uses typescript 1.6 :/
 
 
 #### Vim
@@ -123,20 +120,13 @@ cons:
 ### Take a look at the code
 
 ```
-├── README.md                       // This file
 ├── e2e                             // Folder for e2e tests
-├── karma.conf.js                   // Configuration for karma
-├── package.json 
-├── protractor.conf.js              // Configuration for protractor
+├── public                          // Dev server will serve from this folder
 ├── src                             // All application code goes here
-│   ├── app.component.ts            // The one component that rules them all
-│   ├── base-template.html          // A base template which will be used on all pages
-│   ├── boot.ts                     // Boot file that starts the application
 │   ├── directive                   // Folder for shared directives
 │   ├── hello-world                 // Hello word component, start here!
-│   ├── index.html
 │   ├── lib                         // Folder for shared services
-│   │   ├── contracts               // Contracts of how tv maze API objects look likes
+│   │   ├── contracts               // Contracts for tv maze API
 │   │   │   ├── episode.ts
 │   │   │   └── show.ts
 │   │   ├── providers.ts
@@ -147,17 +137,24 @@ cons:
 │   │   │   ├── local-storage.ts    // Local storage implementation
 │   │   │   ├── storage.ts          // Abstract class of storage
 │   │   │   └── test                // Folder for test cases for storage
+│   │   ├── style                   // Makeup
 │   │   ├── subscribe.service.ts    // Service for subscribing and unsubscribing series
 │   │   ├── test                    // Folder for test cases
 │   │   └── tv-maze.ts              // Service that create http requests to tv maze
+│   ├── app.component.ts            // One component to rule them all
+│   ├── base-template.html          // A base template which will be used on all pages
+│   ├── boot.ts                     // Boot file that bootstrap the application
+│   ├── index.html
 │   ├── search                      // See "Chapter 2"
-│   ├── style.css
 │   └── upcoming                    // See "Chapter 3"
-├── test.bundle.js                  // Endpoint for all unit test case
+├── typings                         // Folder to keep typescript definitions
+├── karma.conf.js                   // Configuration for karma
+├── package.json
+├── protractor.conf.js              // Configuration for protractor
+├── README.md                       // This file
 ├── tsconfig.json                   // Typescript configuration
 ├── tslint.json                     // tslint configuration
-├── typings                         // Folder to keep typescript definitions
-├── typings.json
+├── typings.json                    // typings configuration
 ├── webpack.config.js               // Configuration for webpack
 └── webpack.prod.config.js          // Configuration for webpack - production mode
 ```
@@ -253,22 +250,26 @@ class MyInputComponent {
 
 Did you know that:
 ```html
-<my-comp *ngFor="#show of shows" [show]="show"></my-comp>
+<my-comp *ngFor="let show of shows" [show]="show"></my-comp>
 ```
 
 de-sugars it into:
 ```html
-<my-comp template="ngFor #show of shows" [show]="show"></my-comp>
+<my-comp template="ngFor let show of shows" [show]="show"></my-comp>
 ```
 
 which de-sugars into:
 ```html
-<template ngFor [ngForOf]="shows" #show="$implicit">
+<template ngFor let-show [ngForOf]="shows">
     <my-comp [show]="show"></my-comp>
 </template>
 ```
 
 You can find solutions here: https://gist.github.com/tjoskar/71e0dce55e75e90db971
+
+What to know more about the template syntax: https://angular.io/docs/ts/latest/guide/template-syntax.html
+
+Read why Angular choose this template system http://angularjs.blogspot.se/2016/03/why-angular-renders-components-with.html
 
 ---
 
@@ -338,7 +339,7 @@ So you need tests, that's for sure.
 ### Unit test
 > Let's get started by writing some unit tests.
 
-To be able to run the same test case in different browsers, we need a test-runner and not any test runner. We need a test runner that can start up and communicated with different browsers.
+To be able to run the same test case in different browsers, we need a test-runner and not any test runner. We need a test runner that can start up and communicate with different browsers.
 We have two options: [Testem](https://github.com/testem/testem) and [Karma](http://karma-runner.github.io/). We will go with Karma for now.
 
 We will also need to choose a test-framework (you wouldn't get far with `console.assert`). Unfortunately the Angular team has already made the choice for us, [Jasmine](http://jasmine.github.io/2.4/introduction.html), so lets go with the flow.
@@ -346,25 +347,25 @@ We will also need to choose a test-framework (you wouldn't get far with `console
 First we need to install a few new dependencies (they should already be listed in you `package.json`):
 ```
 jasmine-core               // Core lib for jasmine
+karma                      // Core lib for karma
 karma-jasmine              // So Karma understand jasmine
 karma-mocha-reporter       // A better test reporter
-karma-phantomjs-launcher   // So Karma can start PhantomJS
+karma-electron-launcher    // So Karma can start Electron
 karma-sourcemap-loader     // So Karma understands sourcemaps
 karma-webpack              // So Karma and webpack can talk to each other
-phantomjs-polyfill         // PhantomJS is old
-phantomjs-prebuilt         // PhantomJS, itself
+electron-prebuilt          // Electron
 source-map-loader          // So webpack understand sourcemaps
 ```
 
 Since we are using typescript and `modules`, we need some way of bind all this modules so the browser can understand them, that is why we are using webpack. - Which is awesome but this require some extra work before we can run the test case.
 
-Take a look inside `karma.conf.js`. Karma, will only load one javascript-file (`test.bundle.js`) and pass it to webpack. This file will however load all test files.
-Take a look inside `test.bundle.js`. First of all we load some `polyfills` and angular stuff but then we use the the context method on `require` that webpack created in order to tell webpack what files we actually want to require or import. For each test-file we find we will call the context function that will require the file and load it up. Cool right?
+Take a look inside `karma.conf.js`. Karma, will only load one javascript-file (`unit-test.bundle.js`) and pass it to webpack. This file will however load all test files.
+Take a look inside `unit-test.bundle.js`. First of all we load some `polyfills` and angular stuff but then we use the the context method on `require` that webpack created in order to tell webpack what files we actually want to import. For each test-file we find we will call the context function that will require the file and load it. Cool right?
 
 Ready to write some unit tests? – [Let's get started](https://youtu.be/IKqV7DB8Iwg?t=59s).
 
-Take first a look at: `lib/storage/test/local-storage.test.ts`. Looks straightforward right?
-Take a look at `lib/test/subscribe.service.test.ts` for a more complex test case.
+Take a look at: `lib/storage/test/local-storage.test.ts`. Looks straightforward right?
+Take a look at: `lib/test/subscribe.service.test.ts` for a more complex test case.
 
 To create a new test case you only have to create a new file which the filename ends with `.test.ts`.
 
@@ -376,7 +377,7 @@ $ npm test // This will run all unit tests
 
 Take a look inside the `e2e`.
 
-You will selenum driver to run the test cases. Just run `$ npm run webdriver:update` to download a selenium driver.
+You will need selenum driver to run the test cases. Just run `$ npm run webdriver:update` to download a selenium driver.
 
 Then you can run the e2e-tests by:
 
@@ -417,6 +418,10 @@ Take a look at these blog posts:
 - http://victorsavkin.com/post/110170125256/change-detection-in-angular-2
 - http://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html
 
+Video:
+- https://www.youtube.com/watch?v=CUxD91DWkGM
+- https://www.youtube.com/watch?v=jvKGQSFQf10
+
 ### View Encapsulation
 
 OMG! Native Shadow DOM!
@@ -443,7 +448,7 @@ class YooBoy {}
 
 Don't have anything to do with Angular but it is super cool so check it out!
 
-Take a look at `src/sw.js` in branch `service-worker`. With that inplace and some other hacks (take a look at `src/index.html`) we can get a load time at about 50 ms! And that is awesome.
+Take a look at `src/sw.js` in branch `service-worker`. With that inplace and some other hacks (take a look at `src/index.html`) we can get a load time at about ≈0ms! And that is awesome.
 
 We can also (soon) use sw to sync all shows in the background: https://github.com/WICG/BackgroundSync/blob/master/explainer.md#periodic-synchronization-in-design
 
@@ -454,7 +459,6 @@ OBS! Proposed solution do not exist.
 
 - We can't use `localstorage` anymore. Create a new storage implementation for `indexedDB` (exist is `src/lib/storage`).
 - We can't use `webpack` as we do today since all code that are going to execute in a web-worker must be in a separate file(s).
-- If you succeed, please let me know!
 
 # Congrats!
 
