@@ -45,7 +45,7 @@
     "simple-spy": "^1.0.3",
     "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.1",
-    "typings": "^0.7.9",
+    "typings": "^1.0.4",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
   },

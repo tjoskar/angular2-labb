@@ -30,7 +30,13 @@ module.exports = function(config) {
                     }
                 ],
                 loaders: [
-                    { test: /\.ts$/, loader: 'awesome-typescript-loader' },
+                    {
+                        test: /\.ts$/,
+                        loader: 'awesome-typescript-loader',
+                        query: {
+                            doTypeCheck: false
+                        }
+                    },
 
                     // Support for CSS as raw text
                     { test: /\.css$/, loader: 'raw-loader' },

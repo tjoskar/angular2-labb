@@ -1,5 +1,10 @@
+/// <reference path="./custom-typings.d.ts"/>
+
 import 'es6-shim';
 import 'reflect-metadata';
 import 'zone.js/dist/zone';
-import 'zone.js/dist/long-stack-trace-zone';
-Error.stackTraceLimit = Infinity;
+
+if (ENV !== 'production') {
+    Error.stackTraceLimit = Infinity;
+    require('zone.js/dist/long-stack-trace-zone');
+}

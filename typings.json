@@ -1,8 +1,7 @@
 {
-  "ambientDependencies": {
-    "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#4de74cb527395c13ba20b438c3a7a419ad931f1c",
-    "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#dd638012d63e069f2c99d06ef4dcc9616a943ee4",
-    "node": "registry:dt/node#4.0.0+20160501135006",
-    "simple-spy": "github:tjoskar/simple-spy/typings/simple-spy.d.ts#796dc9adc824cabd0506672adcd5e61c1d18fe22"
+  "globalDependencies": {
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160505161446",
+    "node": "registry:dt/node#6.0.0+20160514165920"
   }
 }
