@@ -3,7 +3,7 @@
 Before we start. If you see any typos or errors, please let me know.  
 – With that said, let's code some fine javascript.
 
-What we will create: https://tjoskar.github.io/angular2-labb/
+What we will create: https://tjoskar.github.io/angular2-labb/ (works offline and is fast)
 
 ## Prologue - Get started
 
