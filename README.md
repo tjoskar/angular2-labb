@@ -5,6 +5,8 @@ Before we start. If you see any typos or errors, please let me know.
 
 What we will create: https://tjoskar.github.io/angular2-labb/ (works offline and is fast)
 
+[Slides for Valtech Tech Day 2016](https://docs.google.com/presentation/d/1F7OzdDzjEzVRrKJWdNb7VaXBiaeOyHGY6epuBvW_F1w)
+
 ## Prologue - Get started
 
 ### Set up the project
