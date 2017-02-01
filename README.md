@@ -269,7 +269,7 @@ which de-sugars into:
 
 You can find solutions here: https://gist.github.com/tjoskar/71e0dce55e75e90db971
 
-What to know more about the template syntax: https://angular.io/docs/ts/latest/guide/template-syntax.html
+Want to know more about the template syntax: https://angular.io/docs/ts/latest/guide/template-syntax.html
 
 Read why Angular choose this template system http://angularjs.blogspot.se/2016/03/why-angular-renders-components-with.html
 
